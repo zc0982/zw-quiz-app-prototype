@@ -1205,7 +1205,7 @@ function QuickPracticeRecordsPage({ onBack }: { onBack: () => void }) {
           </button>
         </div>
         <button className="flex items-center text-blue-500 text-[13px] ml-4 shrink-0">
-          <span>日期</span>
+          <span>日��</span>
           <ChevronDown className="w-3.5 h-3.5 ml-0.5" />
         </button>
       </div>
@@ -4108,137 +4108,145 @@ function WrongQuestionsPage({ onBack }: { onBack: () => void }) {
 }
 
 function LoginPage({ onLoginSuccess }: { onLoginSuccess: () => void }) {
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [verificationCode, setVerificationCode] = useState('');
-  const [isCodeSent, setIsCodeSent] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-
-  const handleSendCode = () => {
-    if (phoneNumber.trim()) {
-      setIsLoading(true);
-      setTimeout(() => {
-        setIsCodeSent(true);
-        setIsLoading(false);
-      }, 1500);
-    }
-  };
-
-  const handleLogin = () => {
-    if (verificationCode.trim()) {
-      setIsLoading(true);
-      setTimeout(() => {
-        onLoginSuccess();
-        setIsLoading(false);
-      }, 1500);
-    }
-  };
+  const [isAgreed, setIsAgreed] = useState(true);
 
   return (
     <div className="absolute inset-0 bg-white z-50 flex flex-col overflow-hidden">
-      {/* Status Bar */}
-      <div className="w-full h-12 flex justify-between items-center px-6 pt-4 text-gray-800 font-bold text-[15px] sticky top-0 z-50">
-        <span>16:28</span>
-        <div className="absolute left-1/2 transform -translate-x-1/2 w-24 h-6 bg-black rounded-full flex items-center justify-center">
-          <div className="w-1 h-1 bg-white/20 rounded-full mr-1"></div>
-          <div className="w-8 h-1 bg-white/20 rounded-full"></div>
-        </div>
-        <div className="flex items-center space-x-2">
-          <Signal className="w-4 h-4" />
-          <Wifi className="w-4 h-4" />
-          <BatteryFull className="w-5 h-5" />
+      {/* Header */}
+      <div className="flex items-center justify-between px-4 py-3">
+        <button onClick={onLoginSuccess} className="w-8 h-8 flex items-center justify-center">
+          <ChevronLeft className="w-6 h-6 text-black/70" />
+        </button>
+        <span className="text-[17px] font-medium text-black/90">笔试 AI</span>
+        <div className="flex items-center gap-2">
+          <div className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center">
+            <MoreHorizontal className="w-4 h-4 text-black/50" />
+          </div>
+          <div className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center">
+            <User className="w-4 h-4 text-black/50" />
+          </div>
         </div>
       </div>
 
       {/* Main Content */}
-      <div className="flex-1 overflow-y-auto hide-scrollbar flex flex-col justify-between">
-        <div className="px-6 pt-12">
-          {/* Logo/Title */}
-          <div className="mb-12">
-            <h1 className="text-[36px] font-bold text-black/90 mb-3">欢迎登录</h1>
-            <p className="text-[15px] text-black/50">请输入您的手机号码登录</p>
+      <div className="flex-1 overflow-y-auto hide-scrollbar flex flex-col">
+        {/* Feature Points */}
+        <div className="px-6 pt-8">
+          <div className="flex items-center justify-center gap-4 mb-2">
+            <div className="flex items-center gap-1">
+              <Check className="w-4 h-4 text-blue-500" />
+              <span className="text-[15px] font-medium text-black/80">考试成绩</span>
+            </div>
+            <div className="flex items-center gap-1">
+              <Check className="w-4 h-4 text-blue-500" />
+              <span className="text-[15px] font-medium text-black/80">学习排名</span>
+            </div>
+            <div className="flex items-center gap-1">
+              <Check className="w-4 h-4 text-blue-500" />
+              <span className="text-[15px] font-medium text-black/80">错题解析</span>
+            </div>
           </div>
+          <p className="text-center text-[14px] text-black/40">
+            更有<span className="text-blue-500 font-medium">考场模式</span>练习，克服紧张焦虑
+          </p>
+        </div>
 
-          {/* Phone Number Input */}
-          <div className="mb-6">
-            <label className="text-[14px] font-medium text-black/60 mb-2 block">手机号码</label>
-            <input
-              type="tel"
-              placeholder="请输入手机号码"
-              value={phoneNumber}
-              onChange={(e) => setPhoneNumber(e.target.value)}
-              disabled={isCodeSent}
-              className="w-full h-12 px-4 border border-gray-200 rounded-xl text-[16px] placeholder-gray-400 focus:outline-none focus:border-blue-500 transition-colors disabled:bg-gray-50 disabled:text-gray-400"
-            />
-          </div>
-
-          {/* Verification Code Input */}
-          {isCodeSent && (
-            <div className="mb-6 animate-in fade-in">
-              <label className="text-[14px] font-medium text-black/60 mb-2 block">验证码</label>
-              <div className="flex gap-3">
-                <input
-                  type="text"
-                  placeholder="请输入验证码"
-                  value={verificationCode}
-                  onChange={(e) => setVerificationCode(e.target.value)}
-                  className="flex-1 h-12 px-4 border border-gray-200 rounded-xl text-[16px] placeholder-gray-400 focus:outline-none focus:border-blue-500 transition-colors"
-                />
-                <button className="px-4 h-12 bg-blue-50 text-blue-500 font-medium rounded-xl text-[14px] border border-blue-200">
-                  重新发送
-                </button>
+        {/* Illustration */}
+        <div className="flex-1 flex items-center justify-center px-8 py-6">
+          <div className="relative w-full max-w-[320px] aspect-square">
+            {/* Background Elements */}
+            <div className="absolute top-4 left-4 w-16 h-8 bg-blue-100/50 rounded-full"></div>
+            <div className="absolute top-8 right-8 w-12 h-6 bg-blue-100/50 rounded-full"></div>
+            
+            {/* Phone Illustration */}
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="relative">
+                {/* Phone Frame */}
+                <div className="w-40 h-56 bg-gradient-to-b from-gray-50 to-gray-100 rounded-2xl border border-gray-200 shadow-lg transform perspective-500 rotate-y-[-5deg] rotate-x-[5deg]">
+                  {/* Phone Screen */}
+                  <div className="absolute inset-2 bg-white rounded-xl overflow-hidden">
+                    {/* Screen Content - Task Items */}
+                    <div className="p-2 space-y-2">
+                      <div className="h-6 bg-blue-100 rounded flex items-center px-2">
+                        <div className="w-3 h-3 bg-blue-400 rounded-sm mr-2"></div>
+                        <div className="flex-1 h-2 bg-blue-200 rounded"></div>
+                      </div>
+                      <div className="h-6 bg-blue-100 rounded flex items-center px-2">
+                        <div className="w-3 h-3 bg-blue-400 rounded-sm mr-2"></div>
+                        <div className="flex-1 h-2 bg-blue-200 rounded"></div>
+                      </div>
+                      <div className="h-6 bg-blue-100 rounded flex items-center px-2">
+                        <div className="w-3 h-3 bg-blue-400 rounded-sm mr-2"></div>
+                        <div className="flex-1 h-2 bg-blue-200 rounded"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                {/* Score Badge */}
+                <div className="absolute -top-2 left-1/2 -translate-x-1/2 bg-orange-500 text-white text-[12px] font-bold px-3 py-1 rounded-lg shadow-md">
+                  100
+                </div>
+                
+                {/* Question Mark Card */}
+                <div className="absolute -right-8 top-1/3 w-10 h-12 bg-green-100 rounded-lg border border-green-200 flex items-center justify-center shadow-sm">
+                  <span className="text-green-500 text-[18px] font-bold">?</span>
+                </div>
+                
+                {/* People Illustration - Left */}
+                <div className="absolute -left-12 bottom-0">
+                  <div className="w-16 h-24">
+                    {/* Person 1 */}
+                    <div className="relative">
+                      <div className="w-6 h-6 bg-blue-200 rounded-full absolute left-2 top-0"></div>
+                      <div className="w-8 h-12 bg-blue-400 rounded-lg absolute left-1 top-5"></div>
+                      <div className="w-4 h-8 bg-blue-300 rounded absolute left-0 top-14"></div>
+                      <div className="w-4 h-8 bg-blue-300 rounded absolute left-5 top-14"></div>
+                    </div>
+                  </div>
+                </div>
+                
+                {/* Blue Cube */}
+                <div className="absolute right-0 -bottom-4 w-4 h-4 bg-blue-500 transform rotate-45"></div>
               </div>
             </div>
-          )}
-
-          {/* Agreement */}
-          <div className="mb-8 flex items-start gap-2">
-            <input
-              type="checkbox"
-              id="agreement"
-              className="w-4 h-4 mt-1 rounded border-gray-300 cursor-pointer"
-              defaultChecked
-            />
-            <label htmlFor="agreement" className="text-[13px] text-black/50 cursor-pointer">
-              我已阅读并同意<span className="text-blue-500">《用户协议》</span>和<span className="text-blue-500">《隐私政策》</span>
-            </label>
           </div>
         </div>
 
-        {/* Buttons */}
-        <div className="px-6 pb-8">
-          {!isCodeSent ? (
-            <button
-              onClick={handleSendCode}
-              disabled={!phoneNumber.trim() || isLoading}
-              className="w-full h-12 bg-blue-500 text-white rounded-xl font-bold text-[16px] transition-all active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              {isLoading ? '发送中...' : '发送验证码'}
-            </button>
-          ) : (
-            <button
-              onClick={handleLogin}
-              disabled={!verificationCode.trim() || isLoading}
-              className="w-full h-12 bg-blue-500 text-white rounded-xl font-bold text-[16px] transition-all active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              {isLoading ? '登录中...' : '登录'}
-            </button>
-          )}
+        {/* Login Button and Agreement */}
+        <div className="px-6 pb-6">
+          <button
+            onClick={onLoginSuccess}
+            disabled={!isAgreed}
+            className="w-full h-12 bg-blue-500 text-white rounded-full font-medium text-[16px] transition-all active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-blue-500/30"
+          >
+            手机号登录
+          </button>
 
-          {/* Other Login Methods */}
-          <div className="mt-6 flex items-center gap-3">
-            <div className="flex-1 h-px bg-gray-200"></div>
-            <span className="text-[12px] text-black/30">其他登录方式</span>
-            <div className="flex-1 h-px bg-gray-200"></div>
+          {/* Agreement */}
+          <div className="mt-4 flex items-center justify-center gap-2">
+            <button
+              onClick={() => setIsAgreed(!isAgreed)}
+              className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-colors ${
+                isAgreed ? 'bg-blue-500 border-blue-500' : 'border-gray-300 bg-white'
+              }`}
+            >
+              {isAgreed && <Check className="w-3 h-3 text-white" />}
+            </button>
+            <span className="text-[13px] text-black/50">
+              我已阅读并同意<span className="text-blue-500">《笔试AI用户使用协议》</span>
+            </span>
           </div>
+        </div>
 
-          <div className="mt-6 flex gap-4 justify-center">
-            <div className="w-12 h-12 bg-gray-50 rounded-xl border border-gray-200 flex items-center justify-center cursor-pointer active:bg-gray-100 transition-colors">
-              <span className="text-[20px]">微信</span>
-            </div>
-            <div className="w-12 h-12 bg-gray-50 rounded-xl border border-gray-200 flex items-center justify-center cursor-pointer active:bg-gray-100 transition-colors">
-              <span className="text-[20px]">QQ</span>
-            </div>
-          </div>
+        {/* Skip Login */}
+        <div className="pb-8">
+          <button
+            onClick={onLoginSuccess}
+            className="w-full text-center text-blue-500 text-[15px] font-medium"
+          >
+            暂不登录
+          </button>
         </div>
       </div>
 
