@@ -551,7 +551,158 @@ function RecitationTab() {
   );
 }
 
-function PersonalInfoPage({ onBack }: { onBack: () => void }) {
+function LoginPage({ onLogin, onSkip }: { onLogin: () => void, onSkip: () => void }) {
+  const [agreed, setAgreed] = useState(false);
+
+  const handleLoginClick = () => {
+    if (!agreed) {
+      alert('请先阅读并同意用户协议和隐私政策');
+      return;
+    }
+    onLogin();
+  };
+
+  return (
+    <div className="absolute inset-0 bg-white z-[100] flex flex-col overflow-hidden">
+      {/* Header */}
+      <div className="h-11 flex items-center justify-between px-3 shrink-0 bg-white sticky top-0 z-10">
+        <button onClick={onSkip} className="p-2 -ml-2 text-gray-900">
+          <ChevronLeft className="w-6 h-6" />
+        </button>
+        <div className="flex items-center justify-between w-[87px] h-[32px] rounded-full border border-black/10 bg-white px-2.5">
+          <button className="flex items-center justify-center text-black active:opacity-50 transition-opacity">
+            <MoreHorizontal className="w-[18px] h-[18px]" />
+          </button>
+          <div className="w-[1px] h-[18px] bg-black/10"></div>
+          <button className="flex items-center justify-center text-black active:opacity-50 transition-opacity">
+            <CircleDot className="w-[18px] h-[18px]" />
+          </button>
+        </div>
+      </div>
+
+      <div className="flex-1 flex flex-col items-center px-6 pt-6 pb-12 overflow-y-auto hide-scrollbar">
+        {/* Main Title */}
+        <h1 className="text-[32px] font-bold text-[#3b82f6] tracking-wider mb-6">公考刷题</h1>
+
+        {/* Title Section */}
+        <div className="flex flex-col items-center gap-2 mb-10">
+          <div className="flex items-center justify-center gap-6">
+            <div className="flex items-center gap-1.5 text-[16px] font-medium text-gray-800">
+              <Check className="w-5 h-5 text-blue-600 stroke-[3]" />
+              <span>考试成绩</span>
+            </div>
+            <div className="flex items-center gap-1.5 text-[16px] font-medium text-gray-800">
+              <Check className="w-5 h-5 text-blue-600 stroke-[3]" />
+              <span>学习排行</span>
+            </div>
+          </div>
+          <div className="flex items-center justify-center gap-6">
+            <div className="flex items-center gap-1.5 text-[16px] font-medium text-gray-800">
+              <Check className="w-5 h-5 text-blue-600 stroke-[3]" />
+              <span>错题分析</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Illustration */}
+        <div className="w-full max-w-[320px] aspect-[4/3] mb-12 relative flex items-center justify-center">
+          {/* New SVG Illustration */}
+          <svg viewBox="0 0 400 300" className="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
+            {/* Background elements */}
+            {/* Bar chart left */}
+            <path d="M70 180 L85 170 L85 200 L70 210 Z" fill="#60a5fa" />
+            <path d="M90 160 L105 150 L105 200 L90 210 Z" fill="#3b82f6" />
+            <path d="M110 140 L125 130 L125 200 L110 210 Z" fill="#2563eb" />
+            
+            {/* Bar chart right back */}
+            <path d="M250 120 L265 110 L265 150 L250 160 Z" fill="#60a5fa" />
+            <path d="M270 100 L285 90 L285 150 L270 160 Z" fill="#3b82f6" />
+
+            {/* Lightbulb left */}
+            <path d="M110 120 C110 110, 120 100, 130 100 C140 100, 150 110, 150 120 C150 125, 145 130, 140 135 L140 145 L120 145 L120 135 C115 130, 110 125, 110 120 Z" fill="#fcd34d" />
+            <path d="M125 145 L135 145 L130 150 Z" fill="#f59e0b" />
+            
+            {/* Lightbulb right */}
+            <path d="M310 160 C310 150, 320 140, 330 140 C340 140, 350 150, 350 160 C350 165, 345 170, 340 175 L340 185 L320 185 L320 175 C315 170, 310 165, 310 160 Z" fill="#fcd34d" />
+            <path d="M325 185 L335 185 L330 190 Z" fill="#f59e0b" />
+
+            {/* Graduation Cap */}
+            <path d="M280 80 L340 60 L400 80 L340 100 Z" fill="#1e3a8a" />
+            <path d="M300 90 L300 110 C300 120, 380 120, 380 110 L380 90 Z" fill="#1e40af" />
+            <path d="M380 80 L380 120" stroke="#fcd34d" strokeWidth="3" />
+            <circle cx="380" cy="125" r="5" fill="#fcd34d" />
+
+            {/* Book left */}
+            <path d="M50 100 L100 80 L140 100 L90 120 Z" fill="#e0f2fe" />
+            <path d="M50 100 L50 120 L90 140 L90 120 Z" fill="#bae6fd" />
+            <path d="M90 140 L140 120 L140 100 L90 120 Z" fill="#7dd3fc" />
+            <path d="M60 105 L90 90 M65 110 L95 95 M70 115 L100 100" stroke="#38bdf8" strokeWidth="2" />
+
+            {/* Phone Base Isometric */}
+            <path d="M150 250 L350 150 L300 110 L100 210 Z" fill="#1e3a8a" stroke="#1e3a8a" strokeWidth="2" strokeLinejoin="round" />
+            <path d="M150 250 L150 265 L350 165 L350 150 Z" fill="#1e40af" stroke="#1e40af" strokeWidth="2" strokeLinejoin="round" />
+            <path d="M100 210 L100 225 L150 265 L150 250 Z" fill="#2563eb" stroke="#2563eb" strokeWidth="2" strokeLinejoin="round" />
+            
+            {/* Phone Screen */}
+            <path d="M155 240 L340 148 L295 115 L110 205 Z" fill="#eff6ff" stroke="#bfdbfe" strokeWidth="2" strokeLinejoin="round" />
+            
+            {/* Screen Elements */}
+            {/* Open Book on Screen */}
+            <path d="M180 190 L240 160 L280 180 L220 210 Z" fill="#ffffff" />
+            <path d="M240 160 L280 180 L280 190 L240 170 Z" fill="#e2e8f0" />
+            <path d="M180 190 L220 210 L220 220 L180 200 Z" fill="#cbd5e1" />
+            <path d="M220 210 L240 160" stroke="#94a3b8" strokeWidth="2" />
+            <path d="M190 190 L215 175 M195 195 L215 185 M245 170 L270 185 M240 175 L265 190" stroke="#cbd5e1" strokeWidth="2" />
+
+            {/* UI Blocks on Screen */}
+            <path d="M130 190 L160 175 L175 185 L145 200 Z" fill="#bfdbfe" />
+            <path d="M140 210 L190 185 L205 195 L155 220 Z" fill="#93c5fd" />
+            <path d="M260 140 L280 130 L295 140 L275 150 Z" fill="#60a5fa" />
+            <path d="M285 125 L305 115 L320 125 L300 135 Z" fill="#3b82f6" />
+            
+            {/* Magnifying Glass */}
+            <circle cx="260" cy="240" r="20" fill="none" stroke="#2563eb" strokeWidth="6" />
+            <circle cx="260" cy="240" r="15" fill="#bfdbfe" opacity="0.5" />
+            <path d="M245 255 L220 270" stroke="#2563eb" strokeWidth="8" strokeLinecap="round" />
+          </svg>
+        </div>
+
+        {/* Login Button */}
+        <button 
+          onClick={handleLoginClick}
+          className="w-full py-3.5 bg-[#3b82f6] text-white text-[17px] font-medium rounded-full active:bg-blue-600 transition-colors mb-6"
+        >
+          手机号一键登录
+        </button>
+
+        {/* Agreement */}
+        <div className="flex items-center justify-center gap-2">
+          <button 
+            onClick={() => setAgreed(!agreed)}
+            className={`w-4 h-4 rounded-[4px] flex items-center justify-center border transition-colors ${agreed ? 'bg-blue-600 border-blue-600' : 'border-gray-400 bg-white'}`}
+          >
+            {agreed && <Check className="w-3 h-3 text-white stroke-[3]" />}
+          </button>
+          <span className="text-[13px] text-gray-500">
+            我已阅读并同意 <span className="text-gray-500">用户协议和隐私政策</span>
+          </span>
+        </div>
+
+        {/* Skip Login */}
+        <div className="mt-auto pt-8">
+          <button 
+            onClick={onSkip}
+            className="text-[15px] text-blue-600 font-medium active:opacity-70 transition-opacity"
+          >
+            先逛逛
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function PersonalInfoPage({ onBack, onLogout }: { onBack: () => void, onLogout: () => void }) {
   return (
     <div className="absolute inset-0 bg-[#F7F8FA] z-50 flex flex-col overflow-hidden">
       {/* Header */}
@@ -614,7 +765,10 @@ function PersonalInfoPage({ onBack }: { onBack: () => void }) {
 
         {/* Logout Button */}
         <div className="px-4 mt-8">
-          <button className="w-full py-3.5 bg-white border border-gray-200 rounded-xl text-[16px] text-gray-800 font-medium active:bg-gray-50 transition-colors">
+          <button 
+            onClick={onLogout}
+            className="w-full py-3.5 bg-white border border-gray-200 rounded-xl text-[16px] text-gray-800 font-medium active:bg-gray-50 transition-colors"
+          >
             退出登录
           </button>
         </div>
@@ -2351,7 +2505,7 @@ function FullSetPracticePage({ onBack, onNavigateToDetail }: { onBack: () => voi
           <div key={index} className="bg-white rounded-2xl p-4 flex gap-4 items-center shadow-sm">
             {/* Cover */}
             <div className="w-[80px] h-[106px] rounded-lg bg-gradient-to-b from-[#3b82f6] to-[#2563eb] relative overflow-hidden flex-shrink-0 shadow-inner">
-              <div className="absolute top-1.5 left-1.5 text-[8px] text-white/80 font-medium scale-75 origin-top-left">X 笔试AI</div>
+              <div className="absolute top-1.5 left-1.5 text-[8px] text-white/80 font-medium scale-75 origin-top-left">X 公考刷题</div>
               <div className="absolute top-5 left-0 w-full px-1.5 text-center">
                 <div className="text-[11px] font-bold text-white leading-tight whitespace-pre-wrap">{item.coverTitle}</div>
               </div>
@@ -3994,9 +4148,14 @@ function NoteRecordsPage({ onBack }: { onBack: () => void }) {
 }
 function DailyPracticePage({ onBack }: { onBack: () => void }) {
   return (
-    <div className="absolute inset-0 bg-white z-50 flex flex-col items-center justify-center">
-      <h1 className="text-2xl font-bold">每日一练</h1>
-      <button onClick={onBack} className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-full">返回</button>
+    <div className="absolute inset-0 z-50 flex flex-col overflow-hidden bg-[#bae6fd]">
+      <Background />
+      <Header onBack={onBack} />
+      
+      <div className="flex-1 overflow-y-auto relative hide-scrollbar">
+        <JourneyMap />
+        <TeamUpIcon />
+      </div>
     </div>
   );
 }
@@ -4109,7 +4268,7 @@ function WrongQuestionsPage({ onBack }: { onBack: () => void }) {
 
 export default function App() {
   const [currentTab, setCurrentTab] = useState(1);
-  const [currentView, setCurrentView] = useState<'main' | 'quiz' | 'material-quiz' | 'report' | 'past-papers' | 'region-past-papers' | 'speed-calc' | 'speed-calc-practice' | 'speed-calc-report' | 'material-speed-calc-advanced' | 'full-set-practice' | 'full-set-detail' | 'search' | 'idiom-practice' | 'vocabulary-practice' | 'public-basic-points' | 'current-affairs' | 'daily-practice' | 'wrong-questions' | 'note-records' | 'my-collections' | 'learning-report' | 'practice-records' | 'personal-info' | 'my-homework' | 'my-mock-exams' | 'quick-practice-records'>('main');
+  const [currentView, setCurrentView] = useState<'main' | 'quiz' | 'material-quiz' | 'report' | 'past-papers' | 'region-past-papers' | 'speed-calc' | 'speed-calc-practice' | 'speed-calc-report' | 'material-speed-calc-advanced' | 'full-set-practice' | 'full-set-detail' | 'search' | 'idiom-practice' | 'vocabulary-practice' | 'public-basic-points' | 'current-affairs' | 'daily-practice' | 'wrong-questions' | 'note-records' | 'my-collections' | 'learning-report' | 'practice-records' | 'personal-info' | 'my-homework' | 'my-mock-exams' | 'quick-practice-records' | 'login'>('main');
   const [selectedRegion, setSelectedRegion] = useState<string>('');
 
   const handleStartQuiz = (type: 'normal' | 'material') => {
@@ -4156,7 +4315,7 @@ export default function App() {
         {currentView === 'daily-practice' && <DailyPracticePage onBack={() => setCurrentView('main')} />}
         {currentView === 'learning-report' && <LearningReportPage onBack={() => setCurrentView('main')} />}
         {currentView === 'practice-records' && <PracticeRecordsPage onBack={() => setCurrentView('main')} />}
-        {currentView === 'personal-info' && <PersonalInfoPage onBack={() => setCurrentView('main')} />}
+        {currentView === 'personal-info' && <PersonalInfoPage onBack={() => setCurrentView('main')} onLogout={() => setCurrentView('login')} />}
         {currentView === 'my-collections' && <MyCollectionsPage onBack={() => setCurrentView('main')} />}
         {currentView === 'my-homework' && <MyHomeworkPage onBack={() => setCurrentView('main')} />}
         {currentView === 'my-mock-exams' && <MyMockExamsPage onBack={() => setCurrentView('main')} />}
@@ -4176,6 +4335,12 @@ export default function App() {
           <RegionPastPapersPage 
             region={selectedRegion} 
             onBack={() => setCurrentView('past-papers')} 
+          />
+        )}
+        {currentView === 'login' && (
+          <LoginPage 
+            onLogin={() => setCurrentView('main')} 
+            onSkip={() => setCurrentView('main')} 
           />
         )}
         {currentView === 'main' && (

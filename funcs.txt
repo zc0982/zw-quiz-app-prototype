@@ -1,0 +1,33 @@
+20:function cn(...inputs: ClassValue[]) {
+61:function HomeTab({ onStartQuiz, onNavigateToPastPapers, onNavigateToFullSetPractice, onNavigateToSearch, onNavigateToCurrentAffairs, onNavigateToDailyPractice }: { onStartQuiz: (type: 'normal' | 'material') => void, onNavigateToPastPapers: () => void, onNavigateToFullSetPractice: () => void, onNavigateToSearch: () => void, onNavigateToCurrentAffairs: () => void, onNavigateToDailyPractice: () => void }) {
+403:function QuickPracticeTab({ onStartQuiz, onNavigateToSpeedCalc, onNavigateToMaterialSpeedCalcAdvanced, onNavigateToIdiomPractice, onNavigateToVocabularyPractice, onNavigateToPublicBasicPoints }: { onStartQuiz: (type: 'normal' | 'material') => void, onNavigateToSpeedCalc: () => void, onNavigateToMaterialSpeedCalcAdvanced: () => void, onNavigateToIdiomPractice: () => void, onNavigateToVocabularyPractice: () => void, onNavigateToPublicBasicPoints: () => void }) {
+470:function RecitationTab() {
+554:function PersonalInfoPage({ onBack }: { onBack: () => void }) {
+626:function PracticeRecordsPage({ onBack }: { onBack: () => void }) {
+688:function LearningReportPage({ onBack }: { onBack: () => void }) {
+922:function MyCollectionsPage({ onBack }: { onBack: () => void }) {
+981:function MyHomeworkPage({ onBack }: { onBack: () => void }) {
+1039:function MyMockExamsPage({ onBack }: { onBack: () => void }) {
+1149:function QuickPracticeRecordsPage({ onBack }: { onBack: () => void }) {
+1241:function MineTab({ onNavigateToWrongQuestions, onNavigateToNoteRecords, onNavigateToMyCollections, onNavigateToLearningReport, onNavigateToPracticeRecords, onNavigateToPersonalInfo, onNavigateToMyHomework, onNavigateToMyMockExams, onNavigateToQuickPracticeRecords }: { onNavigateToWrongQuestions: () => void, onNavigateToNoteRecords: () => void, onNavigateToMyCollections: () => void, onNavigateToLearningReport: () => void, onNavigateToPracticeRecords: () => void, onNavigateToPersonalInfo: () => void, onNavigateToMyHomework: () => void, onNavigateToMyMockExams: () => void, onNavigateToQuickPracticeRecords: () => void }) {
+1364:function QuizPage({ onBack, onSubmit }: { onBack: () => void, onSubmit: () => void }) {
+1592:function MaterialQuizPage({ onBack, onSubmit }: { onBack: () => void, onSubmit: () => void }) {
+1796:function ExamStatItem({ node, level = 0 }: { node: ExamStatNode, level?: number, key?: React.Key }) {
+1855:function QuizReportPage({ onBack, onHome, onRestart }: { onBack: () => void, onHome: () => void, onRestart: () => void }) {
+2036:function RegionPastPapersPage({ region, onBack }: { region: string, onBack: () => void }) {
+2082:function PastPapersPage({ onBack, onSelectRegion }: { onBack: () => void, onSelectRegion: (region: string) => void }) {
+2124:function SpeedCalculationPage({ onBack, onStartPractice }: { onBack: () => void, onStartPractice: () => void }) {
+2194:function MaterialSpeedCalcAdvancedPage({ onBack }: { onBack: () => void }) {
+2319:function FullSetPracticePage({ onBack, onNavigateToDetail }: { onBack: () => void, onNavigateToDetail: () => void }) {
+2385:function FullSetDetailPage({ onBack, onStartQuiz }: { onBack: () => void, onStartQuiz: (type: 'normal' | 'material') => void }) {
+2461:function SearchPage({ onBack }: { onBack: () => void }) {
+2564:function IdiomPracticePage({ onBack, onHome }: { onBack: () => void, onHome: () => void }) {
+2638:function VocabularyPracticePage({ onBack, onHome }: { onBack: () => void, onHome: () => void }) {
+2712:function PublicBasicPointsPage({ onBack, onHome }: { onBack: () => void, onHome: () => void }) {
+2840:function SpeedCalculationPracticePage({ onBack, onHome, onFinish }: { onBack: () => void, onHome: () => void, onFinish: () => void }) {
+2933:function SpeedCalculationReportPage({ onBack, onHome, onRestart }: { onBack: () => void, onHome: () => void, onRestart: () => void }) {
+3097:function CurrentAffairsPage({ onBack }: { onBack: () => void }) {
+3863:function NoteRecordsPage({ onBack }: { onBack: () => void }) {
+3995:function DailyPracticePage({ onBack }: { onBack: () => void }) {
+4093:function WrongQuestionsPage({ onBack }: { onBack: () => void }) {
+4199:export default function App() {

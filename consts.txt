@@ -1,0 +1,124 @@
+24:const quickActions = [
+32:const practiceList = [
+41:const bottomNav = [
+48:const selectionTypes = [
+54:const regionGroups = [
+62:  const [expandedItems, setExpandedItems] = useState<number[]>([1]);
+63:  const [isTypeSheetOpen, setIsTypeSheetOpen] = useState(false);
+64:  const [isLocationSheetOpen, setIsLocationSheetOpen] = useState(false);
+65:  const [selectedType, setSelectedType] = useState('公务员');
+66:  const [selectedLocation, setSelectedLocation] = useState('湖北');
+68:  const toggleItem = (id: number) => {
+346:                const isExpanded = expandedItems.includes(item.id);
+347:                const subItems = [
+471:  const categories = [
+627:  const records = [
+689:  const barData = [
+698:  const radarData = [
+707:  const lineData = [
+923:  const [activeTab, setActiveTab] = useState<'questions' | 'papers'>('questions');
+1040:  const [showPasswordModal, setShowPasswordModal] = useState(false);
+1150:  const records = [
+1242:  const gridItems = [
+1252:  const menuItems = [
+1365:  const [selectedOption, setSelectedOption] = useState<string | null>(null);
+1366:  const [isExplanationMode, setIsExplanationMode] = useState(true);
+1367:  const [activeTab, setActiveTab] = useState<'ai' | 'note'>('ai');
+1369:  const options = [
+1442:              const isSelected = selectedOption === opt.id;
+1443:              const isCorrect = opt.id === 'A'; // Assuming A is correct for this demo
+1444:              const showResult = isExplanationMode && selectedOption !== null;
+1593:  const [selectedOption, setSelectedOption] = useState<string | null>(null);
+1594:  const [sheetHeight, setSheetHeight] = useState(420);
+1595:  const [maxHeight, setMaxHeight] = useState(700);
+1596:  const contentRef = useRef<HTMLDivElement>(null);
+1601:      const contentHeight = contentRef.current.scrollHeight + 38;
+1603:      const containerHeight = contentRef.current.closest('.absolute')?.clientHeight || window.innerHeight;
+1609:  const options = [
+1725:const examStatsData: ExamStatNode[] = [
+1797:  const [expanded, setExpanded] = useState(level === 0 && node.id === '2');
+1798:  const hasChildren = node.children && node.children.length > 0;
+1834:const LaurelLeft = () => (
+2016:const pastPapersData = [
+2027:const regionPastPapersData = [
+2125:  const categories = [
+2195:  const [selectedQuantity, setSelectedQuantity] = useState(20);
+2196:  const [selectedTypes, setSelectedTypes] = useState<string[]>(['混合增长率']);
+2198:  const quantities = [5, 10, 15, 20];
+2199:  const types = [
+2210:  const handleTypeToggle = (type: string) => {
+2218:  const handleSelectAll = () => {
+2320:  const fullSets = [
+2386:  const papers = [
+2713:  const [expandedId, setExpandedId] = useState<string | null>(null);
+2715:  const categories = [
+2738:  const toggleExpand = (id: string) => {
+2774:            const isExpanded = expandedId === category.id;
+2775:            const hasSubcategories = category.subcategories && category.subcategories.length > 0;
+3098:  const [activeTab, setActiveTab] = useState<'weekly' | 'collection'>('weekly');
+3100:  const mockWeeklyData = [
+3110:  const mockCollectionData = [
+3200:const LEVEL_DATA: Level[] = [
+3215:const Background = () => {
+3246:const Header = ({ onBack }: { onBack: () => void }) => {
+3311:const FooterCTA = () => {
+3338:const LevelNode = ({ level, x, y, angle }: { level: any, x: number, y: number, angle: number }) => {
+3339:  const isCurrent = level.status === 'current';
+3340:  const isCompletedDemo = level.date === '1.1';
+3421:const Tree = ({ x, y, scale = 1 }: { x: number, y: number, scale?: number }) => (
+3434:const Island = ({ x, y, scale = 1, flip = false }: { x: number, y: number, scale?: number, flip?: boolean }) => (
+3456:const FloatingClock = ({ x, y, scale = 1 }: { x: number, y: number, scale?: number }) => (
+3487:const PineTree = ({ x, y, scale = 1, zIndex = 10, hasSnow = true }: { x: number, y: number, scale?: number, zIndex?: number, hasSnow?: boolean }) => (
+3514:const SchoolBuilding = ({ y }: { y: number }) => (
+3520:const ForestStart = ({ y }: { y: number }) => (
+3532:const JourneyMap = () => {
+3533:  const START_DATE = new Date('2026-01-01T00:00:00Z');
+3534:  const END_DATE = new Date('2026-04-07T00:00:00Z');
+3535:  const TOTAL_DAYS = Math.floor((END_DATE.getTime() - START_DATE.getTime()) / (1000 * 60 * 60 * 24)) + 1;
+3537:  const D = 100; // Distance between nodes
+3538:  const W = 200; // Width of straight segment
+3539:  const R = 200 / Math.PI; // Radius of arc
+3540:  const L_cycle = 2 * W + 2 * Math.PI * R;
+3541:  const startX = 95;
+3542:  const startY = 220;
+3543:  const END_OFFSET_Y = 240;
+3545:  const getPathPoint = React.useCallback((d: number) => {
+3546:    const cycleIndex = Math.floor(d / L_cycle);
+3547:    const rem = d % L_cycle;
+3548:    const baseY = startY + cycleIndex * 4 * R;
+3553:      const arcDist = rem - W;
+3554:      const theta = arcDist / R;
+3561:      const straightDist = rem - (W + Math.PI * R);
+3568:      const arcDist = rem - (2 * W + Math.PI * R);
+3569:      const theta = arcDist / R;
+3578:  const nodes = React.useMemo(() => {
+3580:      const d = new Date(END_DATE.getTime() - i * 24 * 60 * 60 * 1000);
+3581:      const pt = getPathPoint(i * D);
+3594:  const decorations = React.useMemo(() => {
+3595:    const decs = [];
+3596:    const numCycles = Math.ceil((TOTAL_DAYS * D) / L_cycle);
+3599:      const y = startY + i * 4 * R + 3 * R;
+3600:      const type = i % 3; // 0: Tree, 1: Island, 2: Clock
+3606:  const totalHeight = nodes.length > 0 ? nodes[nodes.length - 1].y + END_OFFSET_Y : 1000;
+3608:  const pathD = React.useMemo(() => {
+3609:    const totalLength = (TOTAL_DAYS - 1) * D;
+3617:      const baseY = startY + cycleIndex * 4 * R;
+3620:      const remLength = totalLength - currentD;
+3629:      const remLength2 = totalLength - currentD;
+3631:        const pt = getPathPoint(totalLength);
+3639:      const remLength3 = totalLength - currentD;
+3648:      const remLength4 = totalLength - currentD;
+3650:        const pt = getPathPoint(totalLength);
+3714:        const lastClockId = Math.max(...decorations.filter(d => d.type === 2).map(d => d.id));
+3715:        const lastTreeId = Math.max(...decorations.filter(d => d.type === 0).map(d => d.id));
+3738:const TeamUpIcon = () => {
+3864:  const [expanded, setExpanded] = useState<Record<string, boolean>>({
+3871:  const toggleExpand = (id: string) => {
+4094:  const [activeTab, setActiveTab] = useState<'knowledge' | 'paper'>('knowledge');
+4200:  const [currentTab, setCurrentTab] = useState(1);
+4201:  const [currentView, setCurrentView] = useState<'main' | 'quiz' | 'material-quiz' | 'report' | 'past-papers' | 'region-past-papers' | 'speed-calc' | 'speed-calc-practice' | 'speed-calc-report' | 'material-speed-calc-advanced' | 'full-set-practice' | 'full-set-detail' | 'search' | 'idiom-practice' | 'vocabulary-practice' | 'public-basic-points' | 'current-affairs' | 'daily-practice' | 'wrong-questions' | 'note-records' | 'my-collections' | 'learning-report' | 'practice-records' | 'personal-info' | 'my-homework' | 'my-mock-exams' | 'quick-practice-records'>('main');
+4202:  const [selectedRegion, setSelectedRegion] = useState<string>('');
+4204:  const handleStartQuiz = (type: 'normal' | 'material') => {
+4208:  const handleSubmitQuiz = () => {
+4288:            const isActive = currentTab === nav.id;
+4289:            const Icon = isActive ? nav.activeIcon : nav.icon;
