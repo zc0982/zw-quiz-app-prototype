@@ -551,7 +551,7 @@ function RecitationTab() {
   );
 }
 
-function PersonalInfoPage({ onBack }: { onBack: () => void }) {
+function PersonalInfoPage({ onBack, onLogout }: { onBack: () => void, onLogout: () => void }) {
   return (
     <div className="absolute inset-0 bg-[#F7F8FA] z-50 flex flex-col overflow-hidden">
       {/* Header */}
@@ -614,7 +614,7 @@ function PersonalInfoPage({ onBack }: { onBack: () => void }) {
 
         {/* Logout Button */}
         <div className="px-4 mt-8">
-          <button className="w-full py-3.5 bg-white border border-gray-200 rounded-xl text-[16px] text-gray-800 font-medium active:bg-gray-50 transition-colors">
+          <button onClick={onLogout} className="w-full py-3.5 bg-white border border-gray-200 rounded-xl text-[16px] text-gray-800 font-medium active:bg-gray-50 transition-colors">
             退出登录
           </button>
         </div>
@@ -1150,7 +1150,7 @@ function QuickPracticeRecordsPage({ onBack }: { onBack: () => void }) {
   const records = [
     { id: 1, question: '下列式子能被整除吗？\n28184÷8', date: '2026年4月1日 18:09:18', isCorrect: true },
     { id: 2, question: '下列式子能被整除吗？\n95580÷4', date: '2026年4月1日 18:09:17', isCorrect: true },
-    { id: 3, question: '下列式子能被整除吗？\n25068÷3', date: '2026年4月1日 18:09:16', isCorrect: false },
+    { id: 3, question: '下列式子能被整除吗？\n25068÷3', date: '2026年4月1��� 18:09:16', isCorrect: false },
     { id: 4, question: '下列式子能被整除吗？\n4617÷8', date: '2026年4月1日 18:09:15', isCorrect: false },
     { id: 5, question: '下列式子能被整除吗？\n331÷8', date: '2026年4月1日 18:09:14', isCorrect: true },
     { id: 6, question: '下列式子能被整除吗？\n72800÷15', date: '2026年4月1日 18:09:13', isCorrect: true },
@@ -4074,7 +4074,7 @@ function WrongQuestionsPage({ onBack }: { onBack: () => void }) {
             {[
               '行测自测1.1',
               '2025年湖北省公务员录用考试《行测》题（网友回忆版）',
-              '【抢先版副省级】2026年国家公务员考试《行政职业能力测验》考试试题（考生回忆版）',
+              '【抢先版副省级】2026年国家公务员考试《行政职业能力��验》考试试题（考生回忆版）',
               '2026年国家公务员录用考试《行政职业能力测验》副省级（考生回忆版）'
             ].map((title, i) => (
               <div key={i} className="bg-white p-4 rounded-2xl">
@@ -4107,9 +4107,150 @@ function WrongQuestionsPage({ onBack }: { onBack: () => void }) {
   );
 }
 
+function LoginPage({ onLoginSuccess }: { onLoginSuccess: () => void }) {
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [verificationCode, setVerificationCode] = useState('');
+  const [isCodeSent, setIsCodeSent] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleSendCode = () => {
+    if (phoneNumber.trim()) {
+      setIsLoading(true);
+      setTimeout(() => {
+        setIsCodeSent(true);
+        setIsLoading(false);
+      }, 1500);
+    }
+  };
+
+  const handleLogin = () => {
+    if (verificationCode.trim()) {
+      setIsLoading(true);
+      setTimeout(() => {
+        onLoginSuccess();
+        setIsLoading(false);
+      }, 1500);
+    }
+  };
+
+  return (
+    <div className="absolute inset-0 bg-white z-50 flex flex-col overflow-hidden">
+      {/* Status Bar */}
+      <div className="w-full h-12 flex justify-between items-center px-6 pt-4 text-gray-800 font-bold text-[15px] sticky top-0 z-50">
+        <span>16:28</span>
+        <div className="absolute left-1/2 transform -translate-x-1/2 w-24 h-6 bg-black rounded-full flex items-center justify-center">
+          <div className="w-1 h-1 bg-white/20 rounded-full mr-1"></div>
+          <div className="w-8 h-1 bg-white/20 rounded-full"></div>
+        </div>
+        <div className="flex items-center space-x-2">
+          <Signal className="w-4 h-4" />
+          <Wifi className="w-4 h-4" />
+          <BatteryFull className="w-5 h-5" />
+        </div>
+      </div>
+
+      {/* Main Content */}
+      <div className="flex-1 overflow-y-auto hide-scrollbar flex flex-col justify-between">
+        <div className="px-6 pt-12">
+          {/* Logo/Title */}
+          <div className="mb-12">
+            <h1 className="text-[36px] font-bold text-black/90 mb-3">欢迎登录</h1>
+            <p className="text-[15px] text-black/50">请输入您的手机号码登录</p>
+          </div>
+
+          {/* Phone Number Input */}
+          <div className="mb-6">
+            <label className="text-[14px] font-medium text-black/60 mb-2 block">手机号码</label>
+            <input
+              type="tel"
+              placeholder="请输入手机号码"
+              value={phoneNumber}
+              onChange={(e) => setPhoneNumber(e.target.value)}
+              disabled={isCodeSent}
+              className="w-full h-12 px-4 border border-gray-200 rounded-xl text-[16px] placeholder-gray-400 focus:outline-none focus:border-blue-500 transition-colors disabled:bg-gray-50 disabled:text-gray-400"
+            />
+          </div>
+
+          {/* Verification Code Input */}
+          {isCodeSent && (
+            <div className="mb-6 animate-in fade-in">
+              <label className="text-[14px] font-medium text-black/60 mb-2 block">验证码</label>
+              <div className="flex gap-3">
+                <input
+                  type="text"
+                  placeholder="请输入验证码"
+                  value={verificationCode}
+                  onChange={(e) => setVerificationCode(e.target.value)}
+                  className="flex-1 h-12 px-4 border border-gray-200 rounded-xl text-[16px] placeholder-gray-400 focus:outline-none focus:border-blue-500 transition-colors"
+                />
+                <button className="px-4 h-12 bg-blue-50 text-blue-500 font-medium rounded-xl text-[14px] border border-blue-200">
+                  重新发送
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* Agreement */}
+          <div className="mb-8 flex items-start gap-2">
+            <input
+              type="checkbox"
+              id="agreement"
+              className="w-4 h-4 mt-1 rounded border-gray-300 cursor-pointer"
+              defaultChecked
+            />
+            <label htmlFor="agreement" className="text-[13px] text-black/50 cursor-pointer">
+              我已阅读并同意<span className="text-blue-500">《用户协议》</span>和<span className="text-blue-500">《隐私政策》</span>
+            </label>
+          </div>
+        </div>
+
+        {/* Buttons */}
+        <div className="px-6 pb-8">
+          {!isCodeSent ? (
+            <button
+              onClick={handleSendCode}
+              disabled={!phoneNumber.trim() || isLoading}
+              className="w-full h-12 bg-blue-500 text-white rounded-xl font-bold text-[16px] transition-all active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {isLoading ? '发送中...' : '发送验证码'}
+            </button>
+          ) : (
+            <button
+              onClick={handleLogin}
+              disabled={!verificationCode.trim() || isLoading}
+              className="w-full h-12 bg-blue-500 text-white rounded-xl font-bold text-[16px] transition-all active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {isLoading ? '登录中...' : '登录'}
+            </button>
+          )}
+
+          {/* Other Login Methods */}
+          <div className="mt-6 flex items-center gap-3">
+            <div className="flex-1 h-px bg-gray-200"></div>
+            <span className="text-[12px] text-black/30">其他登录方式</span>
+            <div className="flex-1 h-px bg-gray-200"></div>
+          </div>
+
+          <div className="mt-6 flex gap-4 justify-center">
+            <div className="w-12 h-12 bg-gray-50 rounded-xl border border-gray-200 flex items-center justify-center cursor-pointer active:bg-gray-100 transition-colors">
+              <span className="text-[20px]">微信</span>
+            </div>
+            <div className="w-12 h-12 bg-gray-50 rounded-xl border border-gray-200 flex items-center justify-center cursor-pointer active:bg-gray-100 transition-colors">
+              <span className="text-[20px]">QQ</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Home Indicator */}
+      <div className="w-1/3 h-1 bg-black/10 rounded-full mx-auto mb-2"></div>
+    </div>
+  );
+}
+
 export default function App() {
   const [currentTab, setCurrentTab] = useState(1);
-  const [currentView, setCurrentView] = useState<'main' | 'quiz' | 'material-quiz' | 'report' | 'past-papers' | 'region-past-papers' | 'speed-calc' | 'speed-calc-practice' | 'speed-calc-report' | 'material-speed-calc-advanced' | 'full-set-practice' | 'full-set-detail' | 'search' | 'idiom-practice' | 'vocabulary-practice' | 'public-basic-points' | 'current-affairs' | 'daily-practice' | 'wrong-questions' | 'note-records' | 'my-collections' | 'learning-report' | 'practice-records' | 'personal-info' | 'my-homework' | 'my-mock-exams' | 'quick-practice-records'>('main');
+  const [currentView, setCurrentView] = useState<'main' | 'quiz' | 'material-quiz' | 'report' | 'past-papers' | 'region-past-papers' | 'speed-calc' | 'speed-calc-practice' | 'speed-calc-report' | 'material-speed-calc-advanced' | 'full-set-practice' | 'full-set-detail' | 'search' | 'idiom-practice' | 'vocabulary-practice' | 'public-basic-points' | 'current-affairs' | 'daily-practice' | 'wrong-questions' | 'note-records' | 'my-collections' | 'learning-report' | 'practice-records' | 'personal-info' | 'my-homework' | 'my-mock-exams' | 'quick-practice-records' | 'login'>('main');
   const [selectedRegion, setSelectedRegion] = useState<string>('');
 
   const handleStartQuiz = (type: 'normal' | 'material') => {
@@ -4156,7 +4297,8 @@ export default function App() {
         {currentView === 'daily-practice' && <DailyPracticePage onBack={() => setCurrentView('main')} />}
         {currentView === 'learning-report' && <LearningReportPage onBack={() => setCurrentView('main')} />}
         {currentView === 'practice-records' && <PracticeRecordsPage onBack={() => setCurrentView('main')} />}
-        {currentView === 'personal-info' && <PersonalInfoPage onBack={() => setCurrentView('main')} />}
+        {currentView === 'personal-info' && <PersonalInfoPage onBack={() => setCurrentView('main')} onLogout={() => setCurrentView('login')} />}
+        {currentView === 'login' && <LoginPage onLoginSuccess={() => setCurrentView('main')} />}
         {currentView === 'my-collections' && <MyCollectionsPage onBack={() => setCurrentView('main')} />}
         {currentView === 'my-homework' && <MyHomeworkPage onBack={() => setCurrentView('main')} />}
         {currentView === 'my-mock-exams' && <MyMockExamsPage onBack={() => setCurrentView('main')} />}
