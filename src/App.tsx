@@ -400,6 +400,78 @@ function HomeTab({ onStartQuiz, onNavigateToPastPapers, onNavigateToFullSetPract
   );
 }
 
+const GreenClipboard = () => (
+  <div className="absolute -top-[17px] left-1/2 -translate-x-1/2 w-[48px] h-[56px] z-10 drop-shadow-sm -rotate-12">
+    <svg viewBox="0 0 48 56" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
+      <defs>
+        <linearGradient id="greenBoard" x1="0" y1="10" x2="0" y2="52" gradientUnits="userSpaceOnUse">
+          <stop stopColor="#bbf7d0" />
+          <stop offset="1" stopColor="#86efac" />
+        </linearGradient>
+        <linearGradient id="greenPaper" x1="0" y1="14" x2="0" y2="47" gradientUnits="userSpaceOnUse">
+          <stop stopColor="#f0fdf4" />
+          <stop offset="1" stopColor="#dcfce7" />
+        </linearGradient>
+        <linearGradient id="goldClip" x1="0" y1="8" x2="0" y2="14" gradientUnits="userSpaceOnUse">
+          <stop stopColor="#fde047" />
+          <stop offset="1" stopColor="#f59e0b" />
+        </linearGradient>
+      </defs>
+      {/* Board Bottom (Shadow/Thickness) */}
+      <rect x="4" y="14" width="40" height="40" rx="8" fill="#4ade80" opacity="0.4" />
+      {/* Board Top */}
+      <rect x="4" y="10" width="40" height="42" rx="8" fill="url(#greenBoard)" />
+      {/* Paper Bottom (Thickness) */}
+      <rect x="8" y="16" width="32" height="32" rx="4" fill="#86efac" opacity="0.5" />
+      {/* Paper Top */}
+      <rect x="8" y="14" width="32" height="33" rx="4" fill="url(#greenPaper)" />
+      {/* Clip Loop */}
+      <path d="M20 6 C20 1, 28 1, 28 6 L28 10 L20 10 Z" fill="#fde68a" />
+      <path d="M22 6 C22 3, 26 3, 26 6 L26 10 L22 10 Z" fill="#fffbeb" />
+      {/* Clip Base */}
+      <rect x="15" y="8" width="18" height="6" rx="3" fill="url(#goldClip)" />
+      {/* Text */}
+      <text x="24" y="36" fill="#166534" fontSize="14" fontWeight="900" textAnchor="middle" style={{fontFamily: 'sans-serif'}}>时政</text>
+    </svg>
+  </div>
+);
+
+const OrangeClipboard = () => (
+  <div className="absolute -top-[17px] left-1/2 -translate-x-1/2 w-[48px] h-[56px] z-10 drop-shadow-sm -rotate-12">
+    <svg viewBox="0 0 48 56" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
+      <defs>
+        <linearGradient id="orangeBoard" x1="0" y1="10" x2="0" y2="52" gradientUnits="userSpaceOnUse">
+          <stop stopColor="#fed7aa" />
+          <stop offset="1" stopColor="#fdba74" />
+        </linearGradient>
+        <linearGradient id="orangePaper" x1="0" y1="14" x2="0" y2="47" gradientUnits="userSpaceOnUse">
+          <stop stopColor="#fff7ed" />
+          <stop offset="1" stopColor="#ffedd5" />
+        </linearGradient>
+        <linearGradient id="goldClip2" x1="0" y1="8" x2="0" y2="14" gradientUnits="userSpaceOnUse">
+          <stop stopColor="#fde047" />
+          <stop offset="1" stopColor="#f59e0b" />
+        </linearGradient>
+      </defs>
+      {/* Board Bottom (Shadow/Thickness) */}
+      <rect x="4" y="14" width="40" height="40" rx="8" fill="#fb923c" opacity="0.4" />
+      {/* Board Top */}
+      <rect x="4" y="10" width="40" height="42" rx="8" fill="url(#orangeBoard)" />
+      {/* Paper Bottom (Thickness) */}
+      <rect x="8" y="16" width="32" height="32" rx="4" fill="#fdba74" opacity="0.5" />
+      {/* Paper Top */}
+      <rect x="8" y="14" width="32" height="33" rx="4" fill="url(#orangePaper)" />
+      {/* Clip Loop */}
+      <path d="M20 6 C20 1, 28 1, 28 6 L28 10 L20 10 Z" fill="#fde68a" />
+      <path d="M22 6 C22 3, 26 3, 26 6 L26 10 L22 10 Z" fill="#fffbeb" />
+      {/* Clip Base */}
+      <rect x="15" y="8" width="18" height="6" rx="3" fill="url(#goldClip2)" />
+      {/* Text */}
+      <text x="24" y="37" fill="#c2410c" fontSize="16" fontWeight="900" textAnchor="middle" style={{fontFamily: 'sans-serif'}}>周</text>
+    </svg>
+  </div>
+);
+
 function QuickPracticeTab({ onStartQuiz, onNavigateToSpeedCalc, onNavigateToMaterialSpeedCalcAdvanced, onNavigateToIdiomPractice, onNavigateToVocabularyPractice, onNavigateToPublicBasicPoints }: { onStartQuiz: (type: 'normal' | 'material') => void, onNavigateToSpeedCalc: () => void, onNavigateToMaterialSpeedCalcAdvanced: () => void, onNavigateToIdiomPractice: () => void, onNavigateToVocabularyPractice: () => void, onNavigateToPublicBasicPoints: () => void }) {
   return (
     <div className="relative z-10 flex flex-col gap-5 pb-28">
@@ -416,22 +488,29 @@ function QuickPracticeTab({ onStartQuiz, onNavigateToSpeedCalc, onNavigateToMate
             <h2 className="text-[17px] font-bold text-black/90 tracking-tight">时政速练</h2>
           </div>
           
-          <div className="flex gap-4">
+          <div className="flex gap-3 mt-4">
             {/* Card 1 */}
-            <div className="flex-1 bg-gradient-to-br from-blue-50 to-white rounded-2xl p-5 text-center cursor-pointer hover:shadow-md transition-all border border-blue-100/50 group" onClick={() => onStartQuiz('normal')}>
-              <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center shadow-sm mx-auto mb-4 group-hover:scale-110 transition-transform">
-                 <ClipboardList className="w-6 h-6 text-blue-500" />
+            <div 
+              className="flex-1 bg-[#eefcf1] rounded-[20px] pt-7 pb-2 px-2 relative cursor-pointer hover:shadow-md transition-all group" 
+              onClick={() => onStartQuiz('normal')}
+            >
+              <GreenClipboard />
+              <div className="relative z-20 bg-white rounded-[14px] py-4 px-1 text-center shadow-[0_2px_10px_rgba(0,0,0,0.02)] h-full flex flex-col justify-center">
+                <h3 className="font-black text-black/90 text-[17px] mb-1.5 tracking-wide">最新时政</h3>
+                <p className="text-[11px] text-black/60 font-medium">收录错题，强化记忆</p>
               </div>
-              <h3 className="font-bold text-black/90 text-[14px] mb-1">时政模考</h3>
-              <p className="text-[11px] text-black/30">最新时政任你刷</p>
             </div>
+
             {/* Card 2 */}
-            <div className="flex-1 bg-gradient-to-br from-orange-50 to-white rounded-2xl p-5 text-center cursor-pointer hover:shadow-md transition-all border border-orange-100/50 group" onClick={() => onStartQuiz('normal')}>
-              <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center shadow-sm mx-auto mb-4 group-hover:scale-110 transition-transform">
-                 <BookOpen className="w-6 h-6 text-orange-500" />
+            <div 
+              className="flex-1 bg-[#fff5ed] rounded-[20px] pt-7 pb-2 px-2 relative cursor-pointer hover:shadow-md transition-all group" 
+              onClick={() => onStartQuiz('normal')}
+            >
+              <OrangeClipboard />
+              <div className="relative z-20 bg-white rounded-[14px] py-4 px-1 text-center shadow-[0_2px_10px_rgba(0,0,0,0.02)] h-full flex flex-col justify-center">
+                <h3 className="font-black text-black/90 text-[17px] mb-1.5 tracking-wide">每周时政</h3>
+                <p className="text-[11px] text-black/60 font-medium">每周热点，深度解析</p>
               </div>
-              <h3 className="font-bold text-black/90 text-[14px] mb-1">时政题库</h3>
-              <p className="text-[11px] text-black/30">配有解析</p>
             </div>
           </div>
         </section>
@@ -452,7 +531,7 @@ function QuickPracticeTab({ onStartQuiz, onNavigateToSpeedCalc, onNavigateToMate
               { title: '言语高频成语', desc: '常考成语累积', icon: BookOpen, color: 'text-yellow-600', bg: 'bg-yellow-50', onClick: onNavigateToIdiomPractice },
               { title: '言语高频实词', desc: '常考实词累积', icon: ClipboardList, color: 'text-emerald-500', bg: 'bg-emerald-50', onClick: onNavigateToVocabularyPractice },
             ].map((item, i) => (
-              <div key={i} className="bg-gray-50/50 rounded-2xl p-5 flex flex-col items-center text-center cursor-pointer hover:bg-white hover:shadow-md transition-all border border-transparent hover:border-blue-100 group" onClick={item.onClick}>
+              <div key={i} className="bg-[#F6F6F6] rounded-2xl p-5 flex flex-col items-center text-center cursor-pointer hover:bg-white hover:shadow-md transition-all border border-transparent hover:border-blue-100 group" onClick={item.onClick}>
                 <div className={`w-14 h-14 rounded-full ${item.bg} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
                   <item.icon className={`w-7 h-7 ${item.color}`} />
                 </div>
