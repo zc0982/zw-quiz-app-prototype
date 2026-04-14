@@ -496,8 +496,8 @@ function QuickPracticeTab({ onStartQuiz, onNavigateToSpeedCalc, onNavigateToMate
             >
               <GreenClipboard />
               <div className="relative z-20 bg-white rounded-[14px] py-4 px-1 text-center shadow-[0_2px_10px_rgba(0,0,0,0.02)] h-full flex flex-col justify-center">
-                <h3 className="font-black text-black/90 text-[17px] mb-1.5 tracking-wide">最新时政</h3>
-                <p className="text-[11px] text-black/60 font-medium">收录错题，强化记忆</p>
+                <h3 className="font-black text-[rgba(0,0,0,0.9)] text-[16px] mb-1.5 tracking-wide">最新时政</h3>
+                <p className="text-[12px] text-[rgba(0,0,0,0.6)] font-medium">收录错题，强化记忆</p>
               </div>
             </div>
 
@@ -508,8 +508,8 @@ function QuickPracticeTab({ onStartQuiz, onNavigateToSpeedCalc, onNavigateToMate
             >
               <OrangeClipboard />
               <div className="relative z-20 bg-white rounded-[14px] py-4 px-1 text-center shadow-[0_2px_10px_rgba(0,0,0,0.02)] h-full flex flex-col justify-center">
-                <h3 className="font-black text-black/90 text-[17px] mb-1.5 tracking-wide">每周时政</h3>
-                <p className="text-[11px] text-black/60 font-medium">每周热点，深度解析</p>
+                <h3 className="font-black text-[rgba(0,0,0,0.9)] text-[16px] mb-1.5 tracking-wide">每周时政</h3>
+                <p className="text-[12px] text-[rgba(0,0,0,0.6)] font-medium">每周热点，深度解析</p>
               </div>
             </div>
           </div>
@@ -535,8 +535,8 @@ function QuickPracticeTab({ onStartQuiz, onNavigateToSpeedCalc, onNavigateToMate
                 <div className={`w-14 h-14 rounded-full ${item.bg} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
                   <item.icon className={`w-7 h-7 ${item.color}`} />
                 </div>
-                <h3 className="font-bold text-black/90 text-[14px] mb-1">{item.title}</h3>
-                <p className="text-[11px] text-black/30">{item.desc}</p>
+                <h3 className="font-bold text-[rgba(0,0,0,0.9)] text-[16px] mb-1">{item.title}</h3>
+                <p className="text-[12px] text-[rgba(0,0,0,0.6)]">{item.desc}</p>
               </div>
             ))}
           </div>
