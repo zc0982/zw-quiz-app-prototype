@@ -29,13 +29,50 @@ const quickActions = [
   { id: 5, title: '模拟试卷', icon: FileEdit, color: 'from-yellow-400 to-orange-500', badge: '1280套' },
 ];
 
-const practiceList = [
-  { id: 1, title: '政治理论', count: '0/211', expanded: true },
-  { id: 2, title: '常识判断', count: '0/7244', expanded: false },
-  { id: 3, title: '言语理解与表达', count: '0/10779', expanded: false },
-  { id: 4, title: '数量关系', count: '0/5586', expanded: false },
-  { id: 5, title: '判断推理', count: '0/12177', expanded: false },
-  { id: 6, title: '资料分析', count: '0/6632', expanded: false },
+type PracticeItemType = {
+  id: string;
+  title: string;
+  count: string;
+  children?: PracticeItemType[];
+};
+
+const practiceList: PracticeItemType[] = [
+  { 
+    id: '1', 
+    title: '政治理论', 
+    count: '32/1400',
+    children: [
+      {
+        id: '1-1',
+        title: '新思想',
+        count: '31/1051',
+        children: [
+          {
+            id: '1-1-1',
+            title: '新思想总论',
+            count: '0/37'
+          },
+          {
+            id: '1-1-2',
+            title: '五位一体建设',
+            count: '29/710',
+            children: [
+              { id: '1-1-2-1', title: '经济建设', count: '28/352' },
+              { id: '1-1-2-2', title: '政治建设', count: '1/88' },
+              { id: '1-1-2-3', title: '文化建设', count: '0/62' },
+              { id: '1-1-2-4', title: '社会建设', count: '0/149' },
+              { id: '1-1-2-5', title: '生态文明建设', count: '0/59' },
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  { id: '2', title: '常识判断', count: '0/7244' },
+  { id: '3', title: '言语理解与表达', count: '0/10779' },
+  { id: '4', title: '数量关系', count: '0/5586' },
+  { id: '5', title: '判断推理', count: '0/12177' },
+  { id: '6', title: '资料分析', count: '0/6632' },
 ];
 
 const bottomNav = [
@@ -70,14 +107,125 @@ const SolarRoundAltArrowDownBold = ({ className }: { className?: string }) => (
   </svg>
 );
 
+const SolarAltArrowRightLinear = ({ className }: { className?: string }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className={className}>
+    <path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="m9 5l6 7l-6 7"/>
+  </svg>
+);
+
+const RadixIconsDotFilled = ({ className }: { className?: string }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15 15" className={className}>
+    <path fill="currentColor" d="M7.5 5.125a2.375 2.375 0 1 1 0 4.75a2.375 2.375 0 0 1 0-4.75"/>
+  </svg>
+);
+
+const PracticeListItem = ({ 
+  item, 
+  level = 1, 
+  expandedItems, 
+  toggleItem,
+  onStartQuiz
+}: { 
+  key?: React.Key;
+  item: PracticeItemType; 
+  level?: number;
+  expandedItems: string[];
+  toggleItem: (id: string) => void;
+  onStartQuiz: (type: 'normal' | 'material') => void;
+}) => {
+  const isExpanded = expandedItems.includes(item.id);
+  const hasChildren = item.children && item.children.length > 0;
+  
+  const renderIcon = () => {
+    if (level === 1) {
+      return isExpanded ? (
+        <SolarRoundAltArrowUpBold className="w-5 h-5 text-blue-500" />
+      ) : (
+        <SolarRoundAltArrowDownBold className="w-5 h-5 text-blue-500" />
+      );
+    } else if (level === 2 || level === 3) {
+      if (hasChildren) {
+        return isExpanded ? (
+          <SolarRoundAltArrowUpBold className="w-5 h-5 text-black/20" />
+        ) : (
+          <SolarRoundAltArrowDownBold className="w-5 h-5 text-black/20" />
+        );
+      } else {
+        return <MinusCircle className="w-5 h-5 text-black/20" />;
+      }
+    } else {
+      return <RadixIconsDotFilled className="w-3 h-3 text-black/20 ml-1 mr-1" />;
+    }
+  };
+
+  return (
+    <div>
+      <div 
+        className={`flex items-center justify-between py-4 cursor-pointer ${level === 4 ? 'px-3' : 'px-5'}`} 
+        onClick={() => {
+          if (hasChildren) toggleItem(item.id);
+          else onStartQuiz(item.title === '资料分析' ? 'material' : 'normal');
+        }}
+      >
+        <div className="flex flex-col items-start gap-1">
+          <div className="flex items-center space-x-3">
+            <div className="flex items-center justify-center transition-all duration-200">
+              {renderIcon()}
+            </div>
+            <span className={`text-black/90 text-[14px] ${level === 1 ? 'font-bold' : ''}`}>{item.title}</span>
+          </div>
+          <div className="flex items-center pl-8">
+            <div className="flex items-center gap-[3px] mr-2">
+              {[...Array(5)].map((_, i) => (
+                <div key={i} className="w-[20px] h-[5px] bg-[#E2EDFF] rounded-[1px] skew-x-[-20deg]"></div>
+              ))}
+            </div>
+            <span className="text-[#9CA3AF] text-[13px] font-medium">{item.count}</span>
+          </div>
+        </div>
+        <div className="flex items-center space-x-3">
+          <div 
+            className="p-2 -mr-2 flex items-center" 
+            onClick={(e) => {
+              e.stopPropagation();
+              onStartQuiz(item.title === '资料分析' ? 'material' : 'normal');
+            }}
+          >
+            {level === 1 && (
+              <span className="text-blue-500 text-[12px] mr-1">继续上次</span>
+            )}
+            <SolarAltArrowRightLinear className="w-3 h-3 text-black/20 hover:text-blue-500 transition-colors" />
+          </div>
+        </div>
+      </div>
+      
+      {/* Sub-items */}
+      {isExpanded && hasChildren && (
+        <div className={`flex flex-col ${level === 3 ? "bg-[#eef4fe] mx-4 rounded-lg overflow-hidden" : ""}`}>
+          {item.children!.map((child) => (
+            <PracticeListItem 
+              key={child.id} 
+              item={child} 
+              level={level + 1} 
+              expandedItems={expandedItems} 
+              toggleItem={toggleItem}
+              onStartQuiz={onStartQuiz}
+            />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
+
 function HomeTab({ onStartQuiz, onNavigateToPastPapers, onNavigateToFullSetPractice, onNavigateToSearch, onNavigateToCurrentAffairs, onNavigateToDailyPractice }: { onStartQuiz: (type: 'normal' | 'material') => void, onNavigateToPastPapers: () => void, onNavigateToFullSetPractice: () => void, onNavigateToSearch: () => void, onNavigateToCurrentAffairs: () => void, onNavigateToDailyPractice: () => void }) {
-  const [expandedItems, setExpandedItems] = useState<number[]>([1]);
+  const [expandedItems, setExpandedItems] = useState<string[]>(['1', '1-1', '1-1-2']);
   const [isTypeSheetOpen, setIsTypeSheetOpen] = useState(false);
   const [isLocationSheetOpen, setIsLocationSheetOpen] = useState(false);
   const [selectedType, setSelectedType] = useState('公务员');
   const [selectedLocation, setSelectedLocation] = useState('湖北');
 
-  const toggleItem = (id: number) => {
+  const toggleItem = (id: string) => {
     setExpandedItems(prev => 
       prev.includes(id) ? prev.filter(itemId => itemId !== id) : [...prev, id]
     );
@@ -354,59 +502,15 @@ function HomeTab({ onStartQuiz, onNavigateToPastPapers, onNavigateToFullSetPract
 
             {/* Content List */}
             <div className="w-full py-1">
-              {practiceList.map((item, index) => {
-                const isExpanded = expandedItems.includes(item.id);
-                const subItems = [
-                  { title: '习近平新时代中国特色社会主义思想', count: '0/85' },
-                  { title: '党的二十大精神', count: '0/42' },
-                  { title: '党史', count: '0/34' },
-                  { title: '马克思主义哲学', count: '0/50' },
-                ];
-
-                return (
-                  <div key={item.id}>
-                    <div 
-                      className="flex items-center justify-between py-4 cursor-pointer px-5" 
-                      onClick={() => toggleItem(item.id)}
-                    >
-                      <div className="flex items-center space-x-3">
-                        <div className="flex items-center justify-center transition-all duration-200">
-                          {isExpanded ? (
-                            <SolarRoundAltArrowUpBold className="w-5 h-5 text-blue-500" />
-                          ) : (
-                            <SolarRoundAltArrowDownBold className="w-5 h-5 text-blue-500" />
-                          )}
-                        </div>
-                        <span className="text-black/90 font-bold text-[14px]">{item.title}</span>
-                      </div>
-                      <div className="flex items-center space-x-3">
-                        <span className="text-black/30 text-[14px]">{item.count}</span>
-                        <div 
-                          className="p-2 -mr-2" 
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            onStartQuiz(item.title === '资料分析' ? 'material' : 'normal');
-                          }}
-                        >
-                          <Pencil className="w-4 h-4 text-black/20 hover:text-blue-500 transition-colors" />
-                        </div>
-                      </div>
-                    </div>
-                    
-                    {/* Sub-items */}
-                    {isExpanded && (
-                      <div className="pl-8 pb-3 flex flex-col gap-1">
-                        {subItems.map((sub, idx) => (
-                          <div key={idx} className="flex items-center justify-between py-2.5 pr-2 group cursor-pointer" onClick={() => onStartQuiz(item.title === '资料分析' ? 'material' : 'normal')}>
-                            <span className="text-black/50 text-[14px] group-hover:text-blue-500 transition-colors line-clamp-1 flex-1 pr-4">{sub.title}</span>
-                            <span className="text-black/20 text-[11px]">{sub.count}</span>
-                          </div>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
+              {practiceList.map((item) => (
+                <PracticeListItem 
+                  key={item.id}
+                  item={item}
+                  expandedItems={expandedItems}
+                  toggleItem={toggleItem}
+                  onStartQuiz={onStartQuiz}
+                />
+              ))}
             </div>
           </section>
         </main>
@@ -3584,7 +3688,7 @@ const FooterCTA = () => {
 
 // --- Map Generator ---
 
-const LevelNode = ({ level, x, y, angle }: { level: any, x: number, y: number, angle: number }) => {
+const LevelNode = ({ level, x, y, angle }: { key?: React.Key; level: any, x: number, y: number, angle: number }) => {
   const isCurrent = level.status === 'current';
   const isCompletedDemo = level.date === '1.1';
   
@@ -3667,7 +3771,7 @@ const LevelNode = ({ level, x, y, angle }: { level: any, x: number, y: number, a
 
 // Decorations
 
-const Tree = ({ x, y, scale = 1 }: { x: number, y: number, scale?: number }) => (
+const Tree = ({ x, y, scale = 1 }: { key?: React.Key; x: number, y: number, scale?: number }) => (
   <div 
     className="absolute pointer-events-none"
     style={{ left: `${x}px`, top: `${y}px`, transform: `scale(${scale})` }}
@@ -3680,7 +3784,7 @@ const Tree = ({ x, y, scale = 1 }: { x: number, y: number, scale?: number }) => 
   </div>
 );
 
-const Island = ({ x, y, scale = 1, flip = false }: { x: number, y: number, scale?: number, flip?: boolean }) => (
+const Island = ({ x, y, scale = 1, flip = false }: { key?: React.Key; x: number, y: number, scale?: number, flip?: boolean }) => (
   <motion.div 
     className="absolute pointer-events-none"
     style={{ left: `${x}px`, top: `${y}px`, transform: `scale(${scale}) ${flip ? 'scaleX(-1)' : ''}` }}
@@ -3702,7 +3806,7 @@ const Island = ({ x, y, scale = 1, flip = false }: { x: number, y: number, scale
   </motion.div>
 );
 
-const FloatingClock = ({ x, y, scale = 1 }: { x: number, y: number, scale?: number }) => (
+const FloatingClock = ({ x, y, scale = 1 }: { key?: React.Key; x: number, y: number, scale?: number }) => (
   <motion.div
     className="absolute pointer-events-none"
     style={{ left: `${x}px`, top: `${y}px`, transform: `scale(${scale})` }}
