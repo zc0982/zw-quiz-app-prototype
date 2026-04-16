@@ -5,7 +5,7 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { 
-  ChevronDown, Bot, Search, Menu, PenLine, FileText, Files, BookOpen, FileEdit,
+  ChevronDown, Bot, Search, Menu, PenLine, FileText, Files, BookOpen, FileEdit, ArrowUp,
   Minus, Plus, Pencil, Home, CheckSquare, Headphones, Smile, User, UserCircle,
   Signal, Wifi, BatteryFull, MoreHorizontal, CircleDot, ClipboardList, 
   MessageCirclePlus, Calculator, FileSearch, FileCheck, CheckCircle2, Settings, ListFilter,
@@ -58,6 +58,18 @@ const regionGroups = [
   { label: 'W-Z', regions: ['新疆', '西藏', '云南', '浙江'] },
 ];
 
+const SolarRoundAltArrowUpBold = ({ className }: { className?: string }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className={className}>
+    <path fill="currentColor" fillRule="evenodd" d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2S2 6.477 2 12s4.477 10 10 10m0-12.25a.75.75 0 0 1 .53.22l3 3a.75.75 0 1 1-1.06 1.06L12 11.56l-2.47 2.47a.75.75 0 0 1-1.06-1.06l3-3a.75.75 0 0 1 .53-.22" clipRule="evenodd"/>
+  </svg>
+);
+
+const SolarRoundAltArrowDownBold = ({ className }: { className?: string }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className={className}>
+    <path fill="currentColor" fillRule="evenodd" d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2S2 6.477 2 12s4.477 10 10 10m3.53-12.03a.75.75 0 0 1 0 1.06l-3 3a.75.75 0 0 1-1.06 0l-3-3a.75.75 0 1 1 1.06-1.06L12 12.44l2.47-2.47a.75.75 0 0 1 1.06 0" clipRule="evenodd"/>
+  </svg>
+);
+
 function HomeTab({ onStartQuiz, onNavigateToPastPapers, onNavigateToFullSetPractice, onNavigateToSearch, onNavigateToCurrentAffairs, onNavigateToDailyPractice }: { onStartQuiz: (type: 'normal' | 'material') => void, onNavigateToPastPapers: () => void, onNavigateToFullSetPractice: () => void, onNavigateToSearch: () => void, onNavigateToCurrentAffairs: () => void, onNavigateToDailyPractice: () => void }) {
   const [expandedItems, setExpandedItems] = useState<number[]>([1]);
   const [isTypeSheetOpen, setIsTypeSheetOpen] = useState(false);
@@ -84,7 +96,7 @@ function HomeTab({ onStartQuiz, onNavigateToPastPapers, onNavigateToFullSetPract
             onClick={() => setIsTypeSheetOpen(true)}
           >
             <div className="flex items-center space-x-1">
-              <span className="text-black font-bold text-[15px]">{selectedType}</span>
+              <span className="text-black text-[15px]">{selectedType}</span>
               <ChevronDown className="w-3 h-3 text-black/60" />
             </div>
             <div className="w-[1px] h-3 bg-black/10 mx-3"></div>
@@ -95,7 +107,7 @@ function HomeTab({ onStartQuiz, onNavigateToPastPapers, onNavigateToFullSetPract
                 setIsLocationSheetOpen(true);
               }}
             >
-              <span className="text-black font-bold text-[15px]">{selectedLocation}</span>
+              <span className="text-black text-[15px]">{selectedLocation}</span>
               <ChevronDown className="w-3 h-3 text-black/60" />
             </div>
           </div>
@@ -327,9 +339,9 @@ function HomeTab({ onStartQuiz, onNavigateToPastPapers, onNavigateToFullSetPract
           </section>
 
           {/* Practice Section */}
-          <section className="mt-2">
+          <section className="mt-2 -mx-4">
             {/* Tabs */}
-            <div className="flex w-full items-center justify-between px-1 mb-2">
+            <div className="flex w-full items-center justify-between px-5 mb-2">
               <div className="flex items-center">
                 <div className="w-1 h-4 bg-blue-500 rounded-full mr-2"></div>
                 <h2 className="text-[17px] font-bold text-black/90">专项练习</h2>
@@ -341,7 +353,7 @@ function HomeTab({ onStartQuiz, onNavigateToPastPapers, onNavigateToFullSetPract
             </div>
 
             {/* Content List */}
-            <div className="bg-white w-full rounded-xl px-4 py-1 shadow-sm border border-black/5">
+            <div className="w-full py-1">
               {practiceList.map((item, index) => {
                 const isExpanded = expandedItems.includes(item.id);
                 const subItems = [
@@ -352,16 +364,20 @@ function HomeTab({ onStartQuiz, onNavigateToPastPapers, onNavigateToFullSetPract
                 ];
 
                 return (
-                  <div key={item.id} className={`${index !== practiceList.length - 1 ? 'border-b border-black/5' : ''}`}>
+                  <div key={item.id}>
                     <div 
-                      className="flex items-center justify-between py-4 cursor-pointer" 
+                      className="flex items-center justify-between py-4 cursor-pointer px-5" 
                       onClick={() => toggleItem(item.id)}
                     >
                       <div className="flex items-center space-x-3">
-                        <div className={`w-5 h-5 rounded-full flex items-center justify-center transition-all duration-200 ${isExpanded ? 'bg-blue-500 text-white' : 'bg-black/5 text-black/30'}`}>
-                          {isExpanded ? <Minus className="w-3 h-3" /> : <Plus className="w-3 h-3" />}
+                        <div className="flex items-center justify-center transition-all duration-200">
+                          {isExpanded ? (
+                            <SolarRoundAltArrowUpBold className="w-5 h-5 text-blue-500" />
+                          ) : (
+                            <SolarRoundAltArrowDownBold className="w-5 h-5 text-blue-500" />
+                          )}
                         </div>
-                        <span className="text-black/90 font-bold text-[17px]">{item.title}</span>
+                        <span className="text-black/90 font-bold text-[14px]">{item.title}</span>
                       </div>
                       <div className="flex items-center space-x-3">
                         <span className="text-black/30 text-[14px]">{item.count}</span>
@@ -431,7 +447,7 @@ const GreenClipboard = () => (
       {/* Clip Base */}
       <rect x="15" y="8" width="18" height="6" rx="3" fill="url(#goldClip)" />
       {/* Text */}
-      <text x="24" y="36" fill="#166534" fontSize="14" fontWeight="900" textAnchor="middle" style={{fontFamily: 'sans-serif'}}>时政</text>
+      <text x="24" y="36" fill="#166534" fontSize="14" fontWeight="400" textAnchor="middle" style={{fontFamily: 'sans-serif'}}>时政</text>
     </svg>
   </div>
 );
@@ -467,7 +483,7 @@ const OrangeClipboard = () => (
       {/* Clip Base */}
       <rect x="15" y="8" width="18" height="6" rx="3" fill="url(#goldClip2)" />
       {/* Text */}
-      <text x="24" y="37" fill="#c2410c" fontSize="16" fontWeight="900" textAnchor="middle" style={{fontFamily: 'sans-serif'}}>周</text>
+      <text x="24" y="37" fill="#c2410c" fontSize="16" fontWeight="400" textAnchor="middle" style={{fontFamily: 'sans-serif'}}>周</text>
     </svg>
   </div>
 );
