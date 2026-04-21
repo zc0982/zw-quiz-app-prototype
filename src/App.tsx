@@ -96,12 +96,6 @@ const regionGroups = [
   { label: 'W-Z', regions: ['新疆', '西藏', '云南', '浙江'] },
 ];
 
-// 特殊颜色省份
-const regionColorMap: Record<string, string> = {
-  '河南': 'text-orange-500',
-  '贵州': 'text-blue-500',
-};
-
 const SolarRoundAltArrowUpBold = ({ className }: { className?: string }) => (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className={className}>
     <path fill="currentColor" fillRule="evenodd" d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2S2 6.477 2 12s4.477 10 10 10m0-12.25a.75.75 0 0 1 .53.22l3 3a.75.75 0 1 1-1.06 1.06L12 11.56l-2.47 2.47a.75.75 0 0 1-1.06-1.06l3-3a.75.75 0 0 1 .53-.22" clipRule="evenodd"/>
@@ -393,7 +387,7 @@ function HomeTab({ onStartQuiz, onNavigateToPastPapers, onNavigateToFullSetPract
                               setSelectedLocation(region);
                               setIsLocationSheetOpen(false);
                             }}
-                            className={`h-12 flex items-center justify-center rounded-xl text-[15px] font-medium border transition-all ${selectedLocation === region ? 'bg-blue-50 border-blue-300 text-blue-600' : `bg-white border-gray-200 ${regionColorMap[region] || 'text-gray-800'}`}`}
+                            className={`h-12 flex items-center justify-center rounded-xl text-[15px] font-medium border transition-all ${selectedLocation === region ? 'bg-blue-50 border-blue-300 text-blue-600' : 'bg-white border-gray-200 text-gray-800'}`}
                           >
                             {region}
                           </button>
@@ -651,7 +645,7 @@ function QuickPracticeTab({ onStartQuiz, onNavigateToSpeedCalc, onNavigateToMate
               { title: '资料找数', desc: '数资得分超简单', icon: FileSearch, color: 'text-red-500', bg: 'bg-red-50' },
               { title: '公基考点', desc: '考点背诵全面掌握', icon: FileCheck, color: 'text-cyan-500', bg: 'bg-cyan-50', onClick: onNavigateToPublicBasicPoints },
               { title: '言语高频成语', desc: '常考成语累积', icon: BookOpen, color: 'text-yellow-600', bg: 'bg-yellow-50', onClick: onNavigateToIdiomPractice },
-              { title: '言语高频实词', desc: '常考实词累积', icon: ClipboardList, color: 'text-emerald-500', bg: 'bg-emerald-50', onClick: onNavigateToVocabularyPractice },
+              { title: '言语高频实词', desc: '常考��词累积', icon: ClipboardList, color: 'text-emerald-500', bg: 'bg-emerald-50', onClick: onNavigateToVocabularyPractice },
             ].map((item, i) => (
               <div key={i} className="bg-[#F6F6F6] rounded-2xl p-5 flex flex-col items-center text-center cursor-pointer hover:bg-white hover:shadow-md transition-all border border-transparent hover:border-blue-100 group" onClick={item.onClick}>
                 <div className={`w-14 h-14 rounded-full ${item.bg} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
@@ -1903,7 +1897,7 @@ function QuizPage({ onBack, onSubmit }: { onBack: () => void, onSubmit: () => vo
                 <p>A项，拓宽消费者投诉渠道有助于遏制直播带货中的违法现象，说明这个方法可以减少直播带货中的违法现象，建立论点和论据的联系，可以作为前提，搭桥项，当选；</p>
                 <p>B项，说明投诉政策可以对商品质量起到约束作用，有助于减少违法现象，可以起到加强作用，但不是论点成立的前提，排除；</p>
                 <p>C项，讨论经营者是否会承担法律责任，但并未说明投诉能不能减少违法现象，论题不一致，排除；</p>
-                <p>D项，讨论所有消费者是否都能准确识别侵权行为，但并未说明投诉能不能减少违法现象，论题不一致，排除。</p>
+                <p>D项，���论所有消费者是否都能准确识别侵权行为，但并未说明投诉能不能减少违法现象，论题不一致，排除。</p>
                 <p>故正确答案为A。</p>
               </div>
               <div className="mt-6 flex items-center justify-between border-t border-gray-100 pt-4">
@@ -2034,7 +2028,7 @@ function MaterialQuizPage({ onBack, onSubmit }: { onBack: () => void, onSubmit: 
             <span className="text-[12px] font-medium text-blue-600 bg-blue-50 px-2 py-0.5 rounded-sm border-l-2 border-blue-600">单选题</span>
           </div>
           <p className="text-[16px] text-gray-900 font-medium mb-5">
-            不能从上述资料中推出的是：
+            不能从上述资料中推出��是：
           </p>
 
           <div className="space-y-5">
@@ -4326,7 +4320,7 @@ function NoteRecordsPage({ onBack }: { onBack: () => void }) {
                             <MinusCircle className="w-6 h-6 text-blue-500 fill-blue-500 text-white" />
                             <span className="text-[15px] text-black/90">不定方程</span>
                           </div>
-                          <span className="text-[13px] text-black/40">1题</span>
+                          <span className="text-[13px] text-black/40">1���</span>
                         </div>
                       )}
                     </>
