@@ -4,10 +4,11 @@
  */
 
 import React, { useState, useRef, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { 
   ChevronDown, Bot, Search, Menu, PenLine, FileText, Files, BookOpen, FileEdit, ArrowUp,
   Minus, Plus, Pencil, Home, CheckSquare, Headphones, Smile, User, UserCircle,
-  Signal, Wifi, BatteryFull, MoreHorizontal, CircleDot, ClipboardList, 
+  MoreHorizontal, CircleDot, ClipboardList, 
   MessageCirclePlus, Calculator, FileSearch, FileCheck, CheckCircle2, Settings, ListFilter,
   LayoutDashboard, Mic, User2, UserCircle2, Star, X, Edit2, MinusCircle,
   ChevronLeft, Pause, Target, Download, Check, RotateCcw, ChevronRight, PlusCircle, Circle, Clock, Lock, Cloud, Feather, ThumbsUp, Calendar, Share, XCircle
@@ -89,11 +90,17 @@ const selectionTypes = [
 ];
 
 const regionGroups = [
-  { label: 'A-G', regions: ['安徽', '北京', '重庆', '福建', '广东', '贵州', '甘肃', '广西'] },
-  { label: 'H-N', regions: ['海南', '湖南', '黑龙江', '河南', '湖北', '河北', '吉林', '江苏', '江西', '辽宁', '内蒙古', '宁夏'] },
-  { label: 'O-U', regions: ['青海', '山东', '四川', '山西', '陕西', '上海', '天津'] },
+  { label: 'A-G', regions: ['安徽', '北京', '重庆', '福建', '贵州', '甘肃', '广西', '广东'] },
+  { label: 'H-N', regions: ['湖南', '河南', '黑龙江', '河北', '湖北', '海南', '江苏', '江西', '吉林', '辽宁', '内蒙古', '宁夏'] },
+  { label: 'O-U', regions: ['青海', '山东', '陕西', '上海', '四川', '山西', '天津'] },
   { label: 'W-Z', regions: ['新疆', '西藏', '云南', '浙江'] },
 ];
+
+// 特殊颜色省份
+const regionColorMap: Record<string, string> = {
+  '河南': 'text-orange-500',
+  '贵州': 'text-blue-500',
+};
 
 const SolarRoundAltArrowUpBold = ({ className }: { className?: string }) => (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className={className}>
@@ -320,101 +327,96 @@ function HomeTab({ onStartQuiz, onNavigateToPastPapers, onNavigateToFullSetPract
           )}
         </AnimatePresence>
 
-        {/* Location Selection Full Screen View */}
-        <AnimatePresence>
-          {isLocationSheetOpen && (
-            <motion.div
-              initial={{ x: "100%" }}
-              animate={{ x: 0 }}
-              exit={{ x: "100%" }}
-              transition={{ type: "spring", damping: 30, stiffness: 300 }}
-              className="fixed inset-0 bg-white z-[200] flex flex-col"
-            >
-              {/* Header */}
-              <div className="px-4 py-3 flex items-center justify-between border-b border-gray-50">
-                <div 
-                  className="p-1 cursor-pointer"
-                  onClick={() => setIsLocationSheetOpen(false)}
-                >
-                  <ChevronDown className="w-6 h-6 text-black/80 transform rotate-90" />
-                </div>
-                <h1 className="text-[17px] font-bold text-black/90">选择报考地区</h1>
-                <div className="w-8"></div> {/* Spacer for centering */}
-              </div>
-
-              <div className="flex-1 overflow-y-auto px-6 pt-8 pb-32">
-                <div className="flex justify-between items-start mb-10">
-                  <div>
-                    <h2 className="text-[28px] font-bold text-black/90 leading-tight">选择报考地区</h2>
-                  </div>
-                  <div className="relative w-56 h-56 -mt-12 -mr-8">
-                    {/* User's Uploaded Location Pin Illustration */}
-                    <img 
-                      src="/location-pin.png" 
-                      alt="Location Pin" 
-                      className="w-full h-full object-contain relative z-10 mix-blend-multiply"
-                    />
-                  </div>
-                </div>
-
-                <div className="mb-8">
-                  <h3 className="text-[18px] font-bold text-black/90 mb-4">报考地区</h3>
-                  <div 
-                    onClick={() => {
-                      setSelectedLocation('国家');
-                      setIsLocationSheetOpen(false);
-                    }}
-                    className={`
-                      w-[100px] h-11 flex items-center justify-center rounded-xl text-[15px] font-medium transition-all
-                      ${selectedLocation === '国家' 
-                        ? 'bg-blue-50 text-blue-600 border border-blue-200' 
-                        : 'bg-white text-black/80 border border-gray-100'
-                      }
-                    `}
+        {/* Location Selection Full Screen View — portal to body to escape parent stacking context */}
+        {createPortal(
+          <AnimatePresence>
+            {isLocationSheetOpen && (
+              <motion.div
+                initial={{ x: "100%" }}
+                animate={{ x: 0 }}
+                exit={{ x: "100%" }}
+                transition={{ type: "spring", damping: 30, stiffness: 300 }}
+                className="fixed inset-0 bg-white z-[9999] flex flex-col"
+              >
+                {/* Top Bar */}
+                <div className="shrink-0 h-12 px-4 flex items-center justify-between border-b border-gray-50">
+                  <button
+                    onClick={() => setIsLocationSheetOpen(false)}
+                    className="w-8 h-8 flex items-center justify-center -ml-2"
+                    aria-label="返回"
                   >
-                    国家
-                  </div>
+                    <ChevronLeft className="w-6 h-6 text-gray-900" />
+                  </button>
+                  <h1 className="text-[17px] font-semibold text-gray-900">选择报考地区</h1>
+                  <div className="w-8" />
                 </div>
 
-                {regionGroups.map((group) => (
-                  <div key={group.label} className="mb-8">
-                    <h4 className="text-[13px] font-medium text-black/20 mb-4 tracking-wider">{group.label}</h4>
-                    <div className="grid grid-cols-3 gap-3">
-                      {group.regions.map((region) => (
-                        <div
-                          key={region}
-                          onClick={() => {
-                            setSelectedLocation(region);
-                            setIsLocationSheetOpen(false);
-                          }}
-                          className={`
-                            h-11 flex items-center justify-center rounded-xl text-[15px] font-medium transition-all
-                            ${selectedLocation === region 
-                              ? 'bg-blue-50 text-blue-600 border border-blue-200' 
-                              : 'bg-white text-black/80 border border-gray-100'
-                            }
-                          `}
-                        >
-                          {region}
-                        </div>
-                      ))}
+                {/* Main content area */}
+                <div className="flex-1 overflow-y-auto px-5 pt-6 pb-6">
+                  {/* Title + Illustration */}
+                  <div className="relative mb-8">
+                    <h2 className="text-[28px] font-bold text-gray-900 leading-tight pt-16">选择报考地区</h2>
+                    <div className="absolute top-0 right-0 w-48 h-48 -mt-4 -mr-4 pointer-events-none">
+                      <img
+                        src="/location-pin.jpg"
+                        alt="地区选择插图"
+                        className="w-full h-full object-contain"
+                      />
                     </div>
                   </div>
-                ))}
-              </div>
 
-              {/* Bottom Button */}
-              <div className="fixed bottom-0 left-0 right-0 p-6 bg-white/80 backdrop-blur-md">
-                <button 
-                  onClick={() => setIsLocationSheetOpen(false)}
-                  className="w-full h-12 bg-blue-600 text-white rounded-2xl font-bold text-[16px] shadow-lg shadow-blue-500/20 active:scale-[0.98] transition-transform"
-                >
-                  完成 进入首页
-                </button>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+                  {/* 国家 */}
+                  <div className="mb-6">
+                    <h3 className="text-[17px] font-bold text-gray-900 mb-4">报考地区</h3>
+                    <div className="grid grid-cols-3 gap-3">
+                      <button
+                        onClick={() => {
+                          setSelectedLocation('国家');
+                          setIsLocationSheetOpen(false);
+                        }}
+                        className={`h-12 flex items-center justify-center rounded-xl text-[15px] font-medium border transition-all ${selectedLocation === '国家' ? 'bg-blue-50 text-blue-600 border-blue-300' : 'bg-white text-gray-800 border-gray-200'}`}
+                      >
+                        国家
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Region groups */}
+                  {regionGroups.map((group) => (
+                    <div key={group.label} className="mb-6">
+                      <h4 className="text-[13px] font-medium text-gray-400 mb-3 tracking-wide">{group.label}</h4>
+                      <div className="grid grid-cols-3 gap-3">
+                        {group.regions.map((region) => (
+                          <button
+                            key={region}
+                            onClick={() => {
+                              setSelectedLocation(region);
+                              setIsLocationSheetOpen(false);
+                            }}
+                            className={`h-12 flex items-center justify-center rounded-xl text-[15px] font-medium border transition-all ${selectedLocation === region ? 'bg-blue-50 border-blue-300 text-blue-600' : `bg-white border-gray-200 ${regionColorMap[region] || 'text-gray-800'}`}`}
+                          >
+                            {region}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Bottom Button */}
+                <div className="shrink-0 px-5 py-4 bg-white">
+                  <button
+                    onClick={() => setIsLocationSheetOpen(false)}
+                    className="w-full h-14 bg-blue-500 text-white rounded-2xl font-semibold text-[17px] active:scale-[0.98] transition-transform"
+                  >
+                    完成 进入首页
+                  </button>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>,
+          document.body
+        )}
         <div className="bg-white/50 backdrop-blur-md rounded-t-[32px] pt-4 mt-2 min-h-screen">
           {/* Top Tab Bar */}
           <div className="px-5 pb-2 flex justify-between items-center relative z-10">
@@ -4479,23 +4481,8 @@ export default function App() {
   };
 
   return (
-    <div className={`max-w-md mx-auto bg-[#F7F7F7] absolute inset-0 sm:relative sm:inset-auto font-sans overflow-hidden shadow-2xl sm:rounded-[40px] sm:my-8 sm:h-[850px] sm:border-[8px] sm:border-gray-900`}>
-      
-      <div className={`relative z-10 h-full overflow-y-auto hide-scrollbar`}>
-        {/* Status Bar */}
-        <div className="w-full h-12 flex justify-between items-center px-6 pt-4 text-gray-800 font-bold text-[15px] sticky top-0 z-50">
-          <span>16:28</span>
-          {/* Dynamic Island Placeholder */}
-          <div className="absolute left-1/2 transform -translate-x-1/2 w-24 h-6 bg-black rounded-full flex items-center justify-center">
-            <div className="w-1 h-1 bg-white/20 rounded-full mr-1"></div>
-            <div className="w-8 h-1 bg-white/20 rounded-full"></div>
-          </div>
-          <div className="flex items-center space-x-2">
-            <Signal className="w-4 h-4" />
-            <Wifi className="w-4 h-4" />
-            <BatteryFull className="w-5 h-5" />
-          </div>
-        </div>
+    <div className="bg-[#F7F7F7] h-screen flex flex-col font-sans overflow-hidden">
+      <div className="relative z-10 flex-1 overflow-y-auto hide-scrollbar">
 
         {currentView === 'quiz' && <QuizPage onBack={() => setCurrentView('main')} onSubmit={handleSubmitQuiz} />}
         {currentView === 'material-quiz' && <MaterialQuizPage onBack={() => setCurrentView('main')} onSubmit={handleSubmitQuiz} />}
@@ -4555,7 +4542,7 @@ export default function App() {
       {/* Bottom Navigation */}
       {currentView === 'main' && (
         <footer 
-          className="absolute bottom-0 w-full bg-white/80 backdrop-blur-lg border-t border-black/5 px-4 py-2 z-50 sm:rounded-b-[32px]"
+          className="w-full bg-white/80 backdrop-blur-lg border-t border-black/5 px-4 py-2 z-50 shrink-0"
           style={{ paddingBottom: 'max(1.5rem, env(safe-area-inset-bottom))' }}
         >
         <div className="flex justify-around items-center">
