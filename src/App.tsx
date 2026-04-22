@@ -1234,7 +1234,7 @@ function LearningReportPage({ onBack }: { onBack: () => void }) {
                 <div className="w-3 h-3 rounded-full border-2 border-blue-500 bg-white mr-1.5 relative">
                   <div className="absolute inset-[-4px] border-t-2 border-blue-500 top-1/2 -translate-y-1/2 w-5 -left-1 -z-10"></div>
                 </div>
-                <span className="text-[12px] text-gray-600">我的正确率</span>
+                <span className="text-[12px] text-gray-600">��的正确率</span>
               </div>
               <div className="flex items-center">
                 <div className="w-3 h-3 rounded-full border-2 border-blue-200 bg-white mr-1.5 relative">
@@ -4086,125 +4086,12 @@ const JourneyMap = () => {
 
 const TeamUpIcon = () => {
   return (
-    <div 
-      className="absolute bottom-[12%] right-0 z-50 flex items-end"
-      style={{ transform: 'scale(0.5)', transformOrigin: 'bottom right' }}
-    >
-      {/* Main Content */}
-      <motion.button
-        whileHover={{ scale: 1.02 }}
-        whileTap={{ scale: 0.95 }}
-        className="flex flex-col items-center relative"
-      >
-        {/* Characters & Flag Container */}
-        <div className="relative h-[55px] w-[140px] flex justify-center items-end -mb-[2px] z-10 pointer-events-none">
-          
-          {/* Light Blue Background Shape */}
-          <div className="absolute left-[5%] bottom-0 w-[60%] h-[110%] bg-[#b3e5fc] rounded-t-[30px] border-[2.5px] border-[#1e293b] z-0">
-            {/* White highlight on the glass */}
-            <div className="absolute top-2 left-2 w-2 h-6 bg-white/60 rounded-full rotate-12"></div>
-            <div className="absolute top-9 left-1.5 w-2 h-2 bg-white/60 rounded-full"></div>
-          </div>
-
-          {/* Yellow Spark behind Girl */}
-          <svg width="30" height="30" viewBox="0 0 100 100" className="absolute left-[-2%] bottom-[30%] z-10">
-            <path d="M 50 50 L 10 20 L 40 45 L 5 60 L 40 65 L 20 95 L 55 70 Z" fill="#ffeb3b" stroke="#1e293b" strokeWidth="4" strokeLinejoin="round" />
-          </svg>
-
-          {/* Girl */}
-          <svg width="50" height="55" viewBox="0 0 100 100" className="absolute left-[8%] bottom-0 overflow-visible z-20">
-            {/* Hair Back */}
-            <path d="M 20 50 Q 15 80 20 90 L 80 90 Q 85 80 80 50 Z" fill="#111" stroke="#1e293b" strokeWidth="3" strokeLinejoin="round" />
-            {/* Body */}
-            <path d="M 30 100 L 30 85 Q 50 75 70 85 L 70 100 Z" fill="#ff8a80" stroke="#1e293b" strokeWidth="3" strokeLinejoin="round" />
-            {/* Head */}
-            <path d="M 25 50 Q 25 20 50 20 Q 75 20 75 50 Q 75 75 50 75 Q 25 75 25 50 Z" fill="#ffe0b2" stroke="#1e293b" strokeWidth="3" />
-            {/* Hair Front */}
-            <path d="M 25 50 Q 25 15 50 15 Q 75 15 75 50 Q 65 25 45 25 Q 35 25 25 50 Z" fill="#111" />
-            {/* Hair Highlight */}
-            <path d="M 32 25 Q 38 22 42 25" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" />
-            {/* Face */}
-            <circle cx="40" cy="55" r="3" fill="#1e293b" />
-            <circle cx="60" cy="55" r="3" fill="#1e293b" />
-            <path d="M 46 62 Q 50 66 54 62" fill="none" stroke="#1e293b" strokeWidth="2" strokeLinecap="round" />
-            <circle cx="32" cy="60" r="4" fill="#ff5252" opacity="0.4" />
-            <circle cx="68" cy="60" r="4" fill="#ff5252" opacity="0.4" />
-          </svg>
-
-          {/* Boy */}
-          <svg width="50" height="55" viewBox="0 0 100 100" className="absolute left-[40%] bottom-0 overflow-visible z-10">
-            {/* Headband Ties Outline */}
-            <g stroke="#1e293b" strokeWidth="6" strokeLinecap="round">
-              <line x1="75" y1="38" x2="95" y2="25" />
-              <line x1="75" y1="38" x2="90" y2="48" />
-            </g>
-            {/* Headband Ties Fill */}
-            <g stroke="#ea580c" strokeWidth="3" strokeLinecap="round">
-              <line x1="75" y1="38" x2="95" y2="25" />
-              <line x1="75" y1="38" x2="90" y2="48" />
-            </g>
-            {/* Body */}
-            <path d="M 30 100 L 30 85 Q 50 75 70 85 L 70 100 Z" fill="#3f51b5" stroke="#1e293b" strokeWidth="3" strokeLinejoin="round" />
-            {/* Head */}
-            <path d="M 25 50 Q 25 20 50 20 Q 75 20 75 50 Q 75 75 50 75 Q 25 75 25 50 Z" fill="#ffe0b2" stroke="#1e293b" strokeWidth="3" />
-            {/* Hair */}
-            <path d="M 20 45 Q 20 10 50 10 Q 80 10 80 45 Q 65 15 45 25 Q 30 25 20 45 Z" fill="#111" />
-            {/* Headband */}
-            <path d="M 23 40 Q 50 30 77 40" fill="none" stroke="#ea580c" strokeWidth="5" />
-            {/* Face */}
-            <circle cx="40" cy="55" r="3" fill="#1e293b" />
-            <circle cx="60" cy="55" r="3" fill="#1e293b" />
-            <path d="M 46 62 Q 50 66 54 62" fill="none" stroke="#1e293b" strokeWidth="2" strokeLinecap="round" />
-            <circle cx="32" cy="60" r="4" fill="#ff5252" opacity="0.4" />
-            <circle cx="68" cy="60" r="4" fill="#ff5252" opacity="0.4" />
-          </svg>
-
-          {/* Flag */}
-          <svg width="35" height="50" viewBox="0 0 50 100" className="absolute right-[2%] bottom-0 overflow-visible z-0">
-            {/* Pole */}
-            <line x1="10" y1="20" x2="10" y2="100" stroke="#1e293b" strokeWidth="4" strokeLinecap="round" />
-            <line x1="10" y1="20" x2="10" y2="100" stroke="#795548" strokeWidth="2" strokeLinecap="round" />
-            {/* Flag Cloth */}
-            <path d="M 10 20 L 45 35 L 10 50 Z" fill="#ef4444" stroke="#1e293b" strokeWidth="2" strokeLinejoin="round" />
-            {/* Star */}
-            <path d="M 20 28 L 22 33 L 27 33 L 23 36 L 24 41 L 20 38 L 16 41 L 17 36 L 13 33 L 18 33 Z" fill="#fde047" />
-          </svg>
-        </div>
-
-        {/* Button Base */}
-        <div className="relative rounded-[16px] border-[2.5px] border-[#1e293b] bg-[#ea580c] pb-[5px] w-[150px]">
-          {/* Left Hand */}
-          <div className="absolute -left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-6 bg-[#ffe0b2] border-[2.5px] border-[#1e293b] rounded-l-full z-20"></div>
-          {/* Right Hand */}
-          <div className="absolute -right-2.5 top-1/2 -translate-y-1/2 w-3.5 h-6 bg-[#ffe0b2] border-[2.5px] border-[#1e293b] rounded-r-full z-20"></div>
-          
-          {/* Inner Button */}
-          <div className="bg-[#fbbf24] rounded-[13px] px-2 py-2 flex items-center justify-center gap-1 border-b-[2px] border-transparent relative overflow-hidden">
-            
-            {/* Text Accents */}
-            <div className="absolute top-1.5 left-[32px] w-3 h-1.5 bg-[#fef08a] rounded-full rotate-[-15deg]"></div>
-            <div className="absolute top-1.5 right-[52px] w-2.5 h-2.5 bg-[#86efac] border-[1.5px] border-[#1e293b] rounded-full"></div>
-
-            <span 
-              className="text-white font-black text-[18px] tracking-widest relative z-10" 
-              style={{ 
-                WebkitTextStroke: '2px #ea580c', 
-                textShadow: '0 2px 0 #ea580c' 
-              }}
-            >
-              <span className="relative z-20" style={{ WebkitTextStroke: '0px', textShadow: 'none' }}>打卡分享</span>
-              <span className="absolute left-0 top-0 -z-10" style={{ WebkitTextStroke: '4px #ea580c' }}>打卡分享</span>
-            </span>
-            
-            {/* Arrow Icon */}
-            <div className="w-[20px] h-[20px] bg-white border-[2.5px] border-[#1e293b] rounded-full flex items-center justify-center shrink-0 ml-1 z-10">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#ea580c" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round">
-                <polyline points="9 18 15 12 9 6"></polyline>
-              </svg>
-            </div>
-          </div>
-        </div>
-      </motion.button>
+    <div className="absolute bottom-[8%] right-4 z-40 pointer-events-none">
+      <img
+        src="/daily-practice-building.png"
+        alt="每日一练建筑插图"
+        className="w-24 h-24 sm:w-32 sm:h-32 object-contain"
+      />
     </div>
   );
 };
