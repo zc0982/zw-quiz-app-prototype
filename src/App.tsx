@@ -26,7 +26,7 @@ const quickActions = [
   { id: 1, title: '每日一练', icon: PenLine, color: 'from-orange-400 to-red-400' },
   { id: 2, title: '最新时政', icon: FileText, color: 'from-green-400 to-emerald-500' },
   { id: 3, title: '历年试卷', icon: Files, color: 'from-blue-400 to-indigo-500' },
-  { id: 4, title: '套题练习', icon: BookOpen, color: 'from-purple-400 to-pink-500', badge: '14套' },
+  { id: 4, title: '智能组卷', icon: BookOpen, color: 'from-purple-400 to-pink-500', badge: '14套' },
   { id: 5, title: '模拟试卷', icon: FileEdit, color: 'from-yellow-400 to-orange-500', badge: '1280套' },
 ];
 
@@ -458,7 +458,7 @@ function HomeTab({ onStartQuiz, onNavigateToPastPapers, onNavigateToFullSetPract
                 onClick={() => {
                   if (action.title === '历年试卷') {
                     onNavigateToPastPapers();
-                  } else if (action.title === '套题练习') {
+                  } else if (action.title === '智能组卷') {
                     onNavigateToFullSetPractice();
                   } else if (action.title === '最新时政') {
                     onNavigateToCurrentAffairs();
@@ -2967,7 +2967,7 @@ function IdiomPracticePage({ onBack, onHome }: { onBack: () => void, onHome: () 
       {/* Question Content */}
       <div className="px-6 mt-12 flex-1 overflow-y-auto">
         <p className="text-[17px] leading-[1.8] text-black/90 font-medium tracking-wide">
-          “历尽天华成此景，人间万事出艰辛”。每一项成就都不是从天上��下来的，而是紧锣密鼓干出来的、<span className="inline-block w-16 border-b border-black mx-1"></span>拼出来的，是快马加鞭冲出来的、奋楫争先抢出来的。
+          “历尽天华成此景，人间万事出艰辛”。每一项成就都不是从天上��下来的，��是紧锣密鼓干出来的、<span className="inline-block w-16 border-b border-black mx-1"></span>拼出来的，是快马加鞭冲出来的、奋楫争先抢出来的。
         </p>
 
         {/* Options */}
