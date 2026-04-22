@@ -26,8 +26,8 @@ const quickActions = [
   { id: 1, title: '每日一练', icon: PenLine, color: 'from-orange-400 to-red-400' },
   { id: 2, title: '最新时政', icon: FileText, color: 'from-green-400 to-emerald-500' },
   { id: 3, title: '历年试卷', icon: Files, color: 'from-blue-400 to-indigo-500' },
-  { id: 4, title: '智能组卷', icon: BookOpen, color: 'from-purple-400 to-pink-500', badge: '14套' },
-  { id: 5, title: '模拟试卷', icon: FileEdit, color: 'from-yellow-400 to-orange-500', badge: '1280套' },
+  { id: 4, title: '智能组卷', icon: BookOpen, color: 'from-purple-400 to-pink-500' },
+  { id: 5, title: '限时练习', icon: FileEdit, color: 'from-yellow-400 to-orange-500' },
 ];
 
 type PracticeItemType = {
