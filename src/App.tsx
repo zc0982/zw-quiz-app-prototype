@@ -220,7 +220,7 @@ const PracticeListItem = ({
 };
 
 function HomeTab({ onStartQuiz, onNavigateToPastPapers, onNavigateToFullSetPractice, onNavigateToSearch, onNavigateToCurrentAffairs, onNavigateToDailyPractice }: { onStartQuiz: (type: 'normal' | 'material') => void, onNavigateToPastPapers: () => void, onNavigateToFullSetPractice: () => void, onNavigateToSearch: () => void, onNavigateToCurrentAffairs: () => void, onNavigateToDailyPractice: () => void }) {
-  const [expandedItems, setExpandedItems] = useState<string[]>(['1', '1-1', '1-1-2']);
+  const [expandedItems, setExpandedItems] = useState<string[]>([]);
   const [isTypeSheetOpen, setIsTypeSheetOpen] = useState(false);
   const [isLocationSheetOpen, setIsLocationSheetOpen] = useState(false);
   const [selectedType, setSelectedType] = useState('公务员');
@@ -2967,7 +2967,7 @@ function IdiomPracticePage({ onBack, onHome }: { onBack: () => void, onHome: () 
       {/* Question Content */}
       <div className="px-6 mt-12 flex-1 overflow-y-auto">
         <p className="text-[17px] leading-[1.8] text-black/90 font-medium tracking-wide">
-          “历尽天华成此景，人间万事出艰辛”。每一项成就都不是从天上掉下来的，而是紧锣密鼓干出来的、<span className="inline-block w-16 border-b border-black mx-1"></span>拼出来的，是快马加鞭冲出来的、奋楫争先抢出来的。
+          “历尽天华成此景，人间万事出艰辛”。每一项成就都不是从天上��下来的，而是紧锣密鼓干出来的、<span className="inline-block w-16 border-b border-black mx-1"></span>拼出来的，是快马加鞭冲出来的、奋楫争先抢出来的。
         </p>
 
         {/* Options */}
