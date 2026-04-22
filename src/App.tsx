@@ -1234,7 +1234,7 @@ function LearningReportPage({ onBack }: { onBack: () => void }) {
                 <div className="w-3 h-3 rounded-full border-2 border-blue-500 bg-white mr-1.5 relative">
                   <div className="absolute inset-[-4px] border-t-2 border-blue-500 top-1/2 -translate-y-1/2 w-5 -left-1 -z-10"></div>
                 </div>
-                <span className="text-[12px] text-gray-600">��的正确率</span>
+                <span className="text-[12px] text-gray-600">���的正确率</span>
               </div>
               <div className="flex items-center">
                 <div className="w-3 h-3 rounded-full border-2 border-blue-200 bg-white mr-1.5 relative">
@@ -4086,7 +4086,7 @@ const JourneyMap = () => {
 
 const TeamUpIcon = () => {
   return (
-    <div className="absolute bottom-0 right-0 z-40 pointer-events-none pb-2 pr-2">
+    <div className="w-full flex justify-end pr-4 pb-6 pointer-events-none">
       <img
         src="/daily-practice-building.png"
         alt="每日一练建筑插图"
