@@ -4086,7 +4086,7 @@ const JourneyMap = () => {
 
 const TeamUpIcon = () => {
   return (
-    <div className="absolute bottom-[8%] right-4 z-40 pointer-events-none">
+    <div className="absolute bottom-0 right-0 z-40 pointer-events-none pb-2 pr-2">
       <img
         src="/daily-practice-building.png"
         alt="每日一练建筑插图"
@@ -4315,7 +4315,7 @@ function WrongQuestionsPage({ onBack }: { onBack: () => void }) {
             {[
               '行测自测1.1',
               '2025年湖北省公务员录用考试《行测》题（网友回忆版）',
-              '【抢先版副省级】2026年国家公务员考试《行政职业能力测验》考试试题（考生回忆版）',
+              '【抢先版副省级】2026年国家公务员考试《行政职业能��测验》考试试题（考生回忆版）',
               '2026年国家公务员录用考试《行政职业能力测验》副省级（考生回忆版）'
             ].map((title, i) => (
               <div key={i} className="bg-white p-4 rounded-2xl">
