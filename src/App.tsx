@@ -2967,7 +2967,7 @@ function IdiomPracticePage({ onBack, onHome }: { onBack: () => void, onHome: () 
       {/* Question Content */}
       <div className="px-6 mt-12 flex-1 overflow-y-auto">
         <p className="text-[17px] leading-[1.8] text-black/90 font-medium tracking-wide">
-          “历尽天华成此景，人间万事出艰辛”。每一项成就都不是从天上��下来的，��是紧锣密鼓干出来的、<span className="inline-block w-16 border-b border-black mx-1"></span>拼出来的，是快马加鞭冲出来的、奋楫争先抢出来的。
+          “历尽天华成此景，人间万事出艰辛”。每一项成就都不是从天上��下来的，��是紧锣密鼓干出来���、<span className="inline-block w-16 border-b border-black mx-1"></span>拼出来的，是快马加鞭冲出来的、奋楫争先抢出来的。
         </p>
 
         {/* Options */}
@@ -3861,8 +3861,8 @@ const PineTree = ({ x, y, scale = 1, zIndex = 10, hasSnow = true }: { x: number,
 );
 
 const SchoolBuilding = ({ y }: { y: number }) => (
-  <div className="absolute drop-shadow-2xl pointer-events-none" style={{ right: 0, top: `${y}px`, transform: 'translateX(45%)', zIndex: 15 }}>
-    <img src="/building.png" alt="School Building" className="w-[160px] h-[180px] object-contain" />
+  <div className="absolute drop-shadow-2xl pointer-events-none" style={{ right: 0, top: `${y}px`, transform: 'translateX(25%)', zIndex: 15 }}>
+    <img src="/daily-practice-building.png" alt="School Building" className="w-[160px] h-[180px] object-contain" />
   </div>
 );
 
@@ -4084,17 +4084,7 @@ const JourneyMap = () => {
   );
 };
 
-const TeamUpIcon = () => {
-  return (
-    <div className="w-full flex justify-end pr-4 pb-6 pointer-events-none">
-      <img
-        src="/daily-practice-building.png"
-        alt="每日一练建筑插图"
-        className="w-24 h-24 sm:w-32 sm:h-32 object-contain"
-      />
-    </div>
-  );
-};
+
 
 function NoteRecordsPage({ onBack }: { onBack: () => void }) {
   const [expanded, setExpanded] = useState<Record<string, boolean>>({
@@ -4236,7 +4226,6 @@ function DailyPracticePage({ onBack }: { onBack: () => void }) {
       
       <div className="flex-1 overflow-y-auto relative hide-scrollbar">
         <JourneyMap />
-        <TeamUpIcon />
       </div>
     </div>
   );
