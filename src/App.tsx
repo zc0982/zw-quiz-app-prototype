@@ -250,14 +250,8 @@ function HomeTab({ onStartQuiz, onNavigateToPastPapers, onNavigateToFullSetPract
         {/* Type Selection Drawer */}
         <Drawer.Root open={isTypeSheetOpen} onOpenChange={setIsTypeSheetOpen}>
           <Drawer.Portal>
-            <Drawer.Overlay
-              className="fixed left-0 right-0 top-0 bg-black/40 z-[9998]"
-              style={{ bottom: 'var(--bottom-nav-h, 0px)' }}
-            />
-            <Drawer.Content
-              className="fixed left-0 right-0 bg-white rounded-t-[32px] z-[9999] px-6 pt-3 pb-6 shadow-2xl outline-none"
-              style={{ bottom: 'var(--bottom-nav-h, 0px)' }}
-            >
+            <Drawer.Overlay className="fixed inset-0 bg-black/40 z-[9998]" />
+            <Drawer.Content className="fixed bottom-0 left-0 right-0 bg-white rounded-t-[32px] z-[9999] px-6 pt-3 pb-10 shadow-2xl outline-none">
               <Drawer.Title className="sr-only">选择类型</Drawer.Title>
               <div className="mx-auto mb-4 h-1.5 w-10 rounded-full bg-gray-200" />
               {selectionTypes.map((type) => (
@@ -1831,7 +1825,7 @@ function MaterialQuizPage({ onBack, onSubmit }: { onBack: () => void, onSubmit: 
   const options = [
     { id: 'A', text: '2023年全国共完成计算机软件著作权登记2495213件' },
     { id: 'B', text: '2023年全国作品著作权登记总量同比增量超过200万件' },
-    { id: 'C', text: '2023年计算机软件著作权质权登记在著作��质权登记总量中的占比...' },
+    { id: 'C', text: '2023年计算机软件著作权质权登记在著作权质权登记总量中的占比...' },
     { id: 'D', text: '2023年全国美术作品登记量占作品登记总量的比例高于50%' },
   ];
 
@@ -4211,25 +4205,6 @@ function WrongQuestionsPage({ onBack }: { onBack: () => void }) {
 }
 
 export default function App() {
-  const footerRef = useRef<HTMLElement>(null);
-  useEffect(() => {
-    const root = document.documentElement;
-    const update = () => {
-      const h = footerRef.current?.offsetHeight ?? 0;
-      root.style.setProperty('--bottom-nav-h', `${h}px`);
-    };
-    update();
-    if (!footerRef.current) {
-      root.style.setProperty('--bottom-nav-h', '0px');
-      return;
-    }
-    const ro = new ResizeObserver(update);
-    ro.observe(footerRef.current);
-    return () => {
-      ro.disconnect();
-      root.style.setProperty('--bottom-nav-h', '0px');
-    };
-  });
   const [currentTab, setCurrentTab] = useState(1);
   const [currentView, setCurrentView] = useState<'main' | 'quiz' | 'material-quiz' | 'report' | 'past-papers' | 'region-past-papers' | 'speed-calc' | 'speed-calc-practice' | 'speed-calc-report' | 'material-speed-calc-advanced' | 'full-set-practice' | 'full-set-detail' | 'search' | 'idiom-practice' | 'vocabulary-practice' | 'public-basic-points' | 'current-affairs' | 'daily-practice' | 'wrong-questions' | 'note-records' | 'my-collections' | 'learning-report' | 'practice-records' | 'personal-info' | 'my-homework' | 'my-mock-exams' | 'quick-practice-records' | 'login'>('main');
   const [selectedRegion, setSelectedRegion] = useState<string>('');
@@ -4304,7 +4279,6 @@ export default function App() {
       {/* Bottom Navigation */}
       {currentView === 'main' && (
         <footer 
-          ref={footerRef}
           className="w-full bg-white/80 backdrop-blur-lg border-t border-black/5 px-4 py-2 z-50 shrink-0"
           style={{ paddingBottom: 'max(1.5rem, env(safe-area-inset-bottom))' }}
         >
