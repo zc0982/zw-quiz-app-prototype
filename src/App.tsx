@@ -4,7 +4,7 @@
  */
 
 import React, { useState, useRef, useEffect } from 'react';
-import { createPortal } from 'react-dom';
+import { Drawer } from 'vaul';
 import { 
   ChevronDown, Bot, Search, Menu, PenLine, FileText, Files, BookOpen, FileEdit, ArrowUp,
   Minus, Plus, Pencil, Home, CheckSquare, Headphones, Smile, User, UserCircle,
@@ -83,18 +83,7 @@ const bottomNav = [
   { id: 5, title: '我的', icon: Smile, activeIcon: Smile },
 ];
 
-const selectionTypes = [
-  '公务员', '事业单位', '教师招聘',
-  '教师资格证', '专升本', '公安联考',
-  '医疗招聘', '三支一扶', '选调生'
-];
-
-const regionGroups = [
-  { label: 'A-G', regions: ['安徽', '北京', '重庆', '福建', '贵州', '甘肃', '广西', '广东'] },
-  { label: 'H-N', regions: ['湖南', '河南', '黑龙江', '河北', '湖北', '海南', '江苏', '江西', '吉林', '辽宁', '内蒙古', '宁夏'] },
-  { label: 'O-U', regions: ['青海', '山东', '陕西', '上海', '四川', '山西', '天津'] },
-  { label: 'W-Z', regions: ['新疆', '西藏', '云南', '浙江'] },
-];
+const selectionTypes = ['公务员', '事业单位'];
 
 const SolarRoundAltArrowUpBold = ({ className }: { className?: string }) => (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className={className}>
@@ -222,9 +211,7 @@ const PracticeListItem = ({
 function HomeTab({ onStartQuiz, onNavigateToPastPapers, onNavigateToFullSetPractice, onNavigateToSearch, onNavigateToCurrentAffairs, onNavigateToDailyPractice }: { onStartQuiz: (type: 'normal' | 'material') => void, onNavigateToPastPapers: () => void, onNavigateToFullSetPractice: () => void, onNavigateToSearch: () => void, onNavigateToCurrentAffairs: () => void, onNavigateToDailyPractice: () => void }) {
   const [expandedItems, setExpandedItems] = useState<string[]>([]);
   const [isTypeSheetOpen, setIsTypeSheetOpen] = useState(false);
-  const [isLocationSheetOpen, setIsLocationSheetOpen] = useState(false);
   const [selectedType, setSelectedType] = useState('公务员');
-  const [selectedLocation, setSelectedLocation] = useState('湖北');
 
   const toggleItem = (id: string) => {
     setExpandedItems(prev => 
@@ -248,17 +235,6 @@ function HomeTab({ onStartQuiz, onNavigateToPastPapers, onNavigateToFullSetPract
               <span className="text-black text-[15px]">{selectedType}</span>
               <ChevronDown className="w-3 h-3 text-black/60" />
             </div>
-            <div className="w-[1px] h-3 bg-black/10 mx-3"></div>
-            <div 
-              className="flex items-center space-x-1"
-              onClick={(e) => {
-                e.stopPropagation();
-                setIsLocationSheetOpen(true);
-              }}
-            >
-              <span className="text-black text-[15px]">{selectedLocation}</span>
-              <ChevronDown className="w-3 h-3 text-black/60" />
-            </div>
           </div>
           <div className="flex items-center justify-between w-[87px] h-[32px] rounded-full border border-black/10 bg-white/60 px-2.5 backdrop-blur-sm">
             <button className="flex items-center justify-center text-black active:opacity-50 transition-opacity">
@@ -271,146 +247,37 @@ function HomeTab({ onStartQuiz, onNavigateToPastPapers, onNavigateToFullSetPract
           </div>
         </header>
 
-        {/* Type Selection Sheet */}
-        <AnimatePresence>
-          {isTypeSheetOpen && (
-            <>
-              {/* Backdrop */}
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                onClick={() => setIsTypeSheetOpen(false)}
-                className="fixed inset-0 bg-black/40 z-[100] backdrop-blur-sm"
-              />
-              {/* Sheet */}
-              <motion.div
-                initial={{ y: "100%" }}
-                animate={{ y: 0 }}
-                exit={{ y: "100%" }}
-                transition={{ type: "spring", damping: 25, stiffness: 200 }}
-                className="fixed bottom-0 left-0 right-0 bg-white rounded-t-[32px] z-[101] px-6 pt-8 pb-12 shadow-2xl max-h-[80vh] overflow-y-auto"
-              >
-                <div className="flex items-center mb-8">
-                  <div className="w-1.5 h-6 bg-blue-500 rounded-full mr-3"></div>
-                  <h2 className="text-[22px] font-bold text-black/90">选择类型</h2>
+        {/* Type Selection Drawer */}
+        <Drawer.Root open={isTypeSheetOpen} onOpenChange={setIsTypeSheetOpen}>
+          <Drawer.Portal>
+            <Drawer.Overlay className="fixed inset-0 bg-black/40 z-[9998]" />
+            <Drawer.Content className="fixed bottom-0 left-0 right-0 bg-white rounded-t-[32px] z-[9999] px-6 pt-3 pb-10 shadow-2xl outline-none">
+              <Drawer.Title className="sr-only">选择类型</Drawer.Title>
+              <div className="mx-auto mb-4 h-1.5 w-10 rounded-full bg-gray-200" />
+              {selectionTypes.map((type) => (
+                <div
+                  key={type}
+                  onClick={() => {
+                    setSelectedType(type);
+                    setIsTypeSheetOpen(false);
+                  }}
+                  className="flex items-center justify-between px-4 py-4 text-[17px] font-medium text-black cursor-pointer"
+                >
+                  <span>{type}</span>
+                  {selectedType === type && (
+                    <span className="w-5 h-5 rounded-full bg-black flex items-center justify-center">
+                      <svg className="w-3 h-3 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                      </svg>
+                    </span>
+                  )}
                 </div>
+              ))}
+            </Drawer.Content>
+          </Drawer.Portal>
+        </Drawer.Root>
 
-                <div className="grid grid-cols-3 gap-x-4 gap-y-5">
-                  {selectionTypes.map((type) => (
-                    <div
-                      key={type}
-                      onClick={() => {
-                        setSelectedType(type);
-                        setIsTypeSheetOpen(false);
-                      }}
-                      className={`
-                        h-12 flex items-center justify-center rounded-full text-[15px] font-medium transition-all duration-200
-                        ${selectedType === type 
-                          ? 'bg-blue-50 text-blue-600 border-2 border-blue-500 shadow-[0_4px_12px_rgba(59,130,246,0.15)]' 
-                          : 'bg-gray-50 text-black/80 border-2 border-transparent active:scale-95'
-                        }
-                      `}
-                    >
-                      {type}
-                    </div>
-                  ))}
-                </div>
-              </motion.div>
-            </>
-          )}
-        </AnimatePresence>
 
-        {/* Location Selection Full Screen View — portal to body to escape parent stacking context */}
-        {createPortal(
-          <AnimatePresence>
-            {isLocationSheetOpen && (
-              <motion.div
-                initial={{ x: "100%" }}
-                animate={{ x: 0 }}
-                exit={{ x: "100%" }}
-                transition={{ type: "spring", damping: 30, stiffness: 300 }}
-                className="fixed inset-0 bg-white z-[9999] flex flex-col"
-              >
-                {/* Top Bar */}
-                <div className="shrink-0 h-12 px-4 flex items-center justify-between border-b border-gray-50">
-                  <button
-                    onClick={() => setIsLocationSheetOpen(false)}
-                    className="w-8 h-8 flex items-center justify-center -ml-2"
-                    aria-label="返回"
-                  >
-                    <ChevronLeft className="w-6 h-6 text-gray-900" />
-                  </button>
-                  <h1 className="text-[17px] font-semibold text-gray-900">选择报考地区</h1>
-                  <div className="w-8" />
-                </div>
-
-                {/* Main content area */}
-                <div className="flex-1 overflow-y-auto px-5 pt-6 pb-6">
-                  {/* Title + Illustration */}
-                  <div className="relative mb-8">
-                    <h2 className="text-[28px] font-bold text-gray-900 leading-tight pt-16">选择报考地区</h2>
-                    <div className="absolute top-0 right-0 w-48 h-48 -mt-4 -mr-4 pointer-events-none">
-                      <img
-                        src="/location-pin.jpg"
-                        alt="地区选择插图"
-                        className="w-full h-full object-contain"
-                      />
-                    </div>
-                  </div>
-
-                  {/* 国家 */}
-                  <div className="mb-6">
-                    <h3 className="text-[17px] font-bold text-gray-900 mb-4">报考地区</h3>
-                    <div className="grid grid-cols-3 gap-3">
-                      <button
-                        onClick={() => {
-                          setSelectedLocation('国家');
-                          setIsLocationSheetOpen(false);
-                        }}
-                        className={`h-12 flex items-center justify-center rounded-xl text-[15px] font-medium border transition-all ${selectedLocation === '国家' ? 'bg-blue-50 text-blue-600 border-blue-300' : 'bg-white text-gray-800 border-gray-200'}`}
-                      >
-                        国家
-                      </button>
-                    </div>
-                  </div>
-
-                  {/* Region groups */}
-                  {regionGroups.map((group) => (
-                    <div key={group.label} className="mb-6">
-                      <h4 className="text-[13px] font-medium text-gray-400 mb-3 tracking-wide">{group.label}</h4>
-                      <div className="grid grid-cols-3 gap-3">
-                        {group.regions.map((region) => (
-                          <button
-                            key={region}
-                            onClick={() => {
-                              setSelectedLocation(region);
-                              setIsLocationSheetOpen(false);
-                            }}
-                            className={`h-12 flex items-center justify-center rounded-xl text-[15px] font-medium border transition-all ${selectedLocation === region ? 'bg-blue-50 border-blue-300 text-blue-600' : 'bg-white border-gray-200 text-gray-800'}`}
-                          >
-                            {region}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-
-                {/* Bottom Button */}
-                <div className="shrink-0 px-5 py-4 bg-white">
-                  <button
-                    onClick={() => setIsLocationSheetOpen(false)}
-                    className="w-full h-14 bg-blue-500 text-white rounded-2xl font-semibold text-[17px] active:scale-[0.98] transition-transform"
-                  >
-                    完成 进入首页
-                  </button>
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>,
-          document.body
-        )}
         <div className="bg-white/50 backdrop-blur-md rounded-t-[32px] pt-4 mt-2 min-h-screen">
           {/* Top Tab Bar */}
           <div className="px-5 pb-2 flex justify-between items-center relative z-10">
@@ -612,7 +479,7 @@ function QuickPracticeTab({ onStartQuiz, onNavigateToSpeedCalc, onNavigateToMate
             >
               <GreenClipboard />
               <div className="relative z-20 bg-white rounded-[14px] py-4 px-1 text-center shadow-[0_2px_10px_rgba(0,0,0,0.02)] h-full flex flex-col justify-center">
-                <h3 className="font-black text-[rgba(0,0,0,0.9)] text-[16px] mb-1.5 tracking-wide">最新时政</h3>
+                <h3 className="font-black text-[rgba(0,0,0,0.9)] text-[16px] mb-1.5 tracking-wide">��新时政</h3>
                 <p className="text-[12px] text-[rgba(0,0,0,0.6)] font-medium">收录错题，强化记忆</p>
               </div>
             </div>
@@ -751,7 +618,7 @@ function LoginPage({ onLogin, onSkip }: { onLogin: () => void, onSkip: () => voi
 
   const handleLoginClick = () => {
     if (!agreed) {
-      alert('请先阅读并同意用户协议和隐私政策');
+      alert('请先阅读并同意用户协议和隐私政��');
       return;
     }
     onLogin();
@@ -1067,7 +934,7 @@ function LearningReportPage({ onBack }: { onBack: () => void }) {
         <button onClick={onBack} className="p-2 -ml-2 text-gray-900">
           <ChevronLeft className="w-6 h-6" />
         </button>
-        <h1 className="text-[17px] font-bold text-gray-900">学习报告</h1>
+        <h1 className="text-[17px] font-bold text-gray-900">学习���告</h1>
         <div className="flex items-center justify-between w-[87px] h-[32px] rounded-full border border-black/10 bg-white/60 px-2.5">
           <button className="flex items-center justify-center text-black active:opacity-50 transition-opacity">
             <MoreHorizontal className="w-[18px] h-[18px]" />
@@ -1192,7 +1059,7 @@ function LearningReportPage({ onBack }: { onBack: () => void }) {
               <RadarChart cx="50%" cy="50%" outerRadius="70%" data={radarData}>
                 <PolarGrid stroke="#e5e7eb" />
                 <PolarAngleAxis dataKey="subject" tick={{ fill: '#6b7280', fontSize: 10 }} />
-                <Radar name="平均掌握度" dataKey="avgMastery" stroke="#DBEAFE" fill="#DBEAFE" fillOpacity={0.5} />
+                <Radar name="平均��握度" dataKey="avgMastery" stroke="#DBEAFE" fill="#DBEAFE" fillOpacity={0.5} />
                 <Radar name="我的掌握度" dataKey="myMastery" stroke="#3B82F6" fill="#3B82F6" fillOpacity={0.8} />
               </RadarChart>
             </ResponsiveContainer>
@@ -2003,7 +1870,7 @@ function MaterialQuizPage({ onBack, onSubmit }: { onBack: () => void, onSubmit: 
             <span className="text-[12px] font-medium text-blue-600 bg-blue-50 px-2 py-0.5 rounded-sm">材料</span>
           </div>
           <p className="text-[16px] text-gray-800 leading-loose tracking-wide indent-8 text-justify">
-            2023年全国著作权（包括作品著作权、计算机软件著作权、著作权质权）登记总量达8923901件，同比增长40.46%，增速比上年同期增加39个百分点。根据各省、自治区、直辖市版权局和中国版权保护中心作品登记信息统计，2023年全国共完成作品著作权登记6428277件，同比增长42.30%，登记量前五位的分别是：北京市1101072件，同比增加53802件；山东省873826件，同比增加619459件；福建省710648件，同比增加424814件；中国版权保护中心493070件，同比增加1476件；上海市412660件，同比增加30660件。从作品类型来看，登记量最多的是美术作品3296437件...
+            2023年全国著作权（包括作品著作权、计算机软件著作权、著作权质权）登记总量达8923901件，同比增长40.46%，增速比上年同期增加39个百分点。根据各省、自���区、直辖市版权局和中国版权保护中心作品登记信息统计，2023年全国共完成作品著作权登记6428277件，同比增长42.30%，登记量前五位的分别是：北京市1101072件，同比增加53802件；山东省873826件，同比增加619459件；福建省710648件，同比增加424814件；中国版权保护中心493070件，同比增加1476件；上海市412660件，同比增加30660件。从作品类型来看，登记量最多的是美术作品3296437件...
           </p>
         </div>
       </div>
@@ -2378,7 +2245,7 @@ const regionPastPapersData = [
   { id: 2, title: '2024年安徽省公务员录用考试《行测》题（网友回忆版）', date: '2024-03-17 14:12:18', count: 110, status: '未完成' },
   { id: 3, title: '2023年安徽省公务员录用考试《行测》题（网友回忆版）', date: '2023-11-03 14:22:18', count: 110, status: '未完成' },
   { id: 4, title: '2022年安徽省公务员录用考试《行测》题（网友回忆版）', date: '2023-11-03 14:22:18', count: 110, status: '未完成' },
-  { id: 5, title: '2021年安徽省公务员录用考试《行测》题（网友回忆版）', date: '2022-07-25 09:29:46', count: 110, status: '未完成' },
+  { id: 5, title: '2021年安徽省公务员录用考试《行测》题��网友回忆版）', date: '2022-07-25 09:29:46', count: 110, status: '未完成' },
   { id: 6, title: '2020年安徽省公务员录用考试《行测》试题（网友回忆版）', date: '', count: 0, status: '' },
 ];
 
@@ -2548,7 +2415,7 @@ function MaterialSpeedCalcAdvancedPage({ onBack }: { onBack: () => void }) {
   const types = [
     '基础量计算', '现期量计算', '增长率计算',
     '增长量计算', '多个数相加减', '平均值',
-    '间隔增长率', '分数比较-简单分数比较',
+    '间隔增长率', '分数��较-简单分数比较',
     '分数比较-进阶分数比较',
     '分数比较-多个分数比较', '百化分-基础积累',
     '百化分-进阶提升', '平均增长率', '基期和差',
@@ -2669,7 +2536,7 @@ function FullSetPracticePage({ onBack, onNavigateToDetail }: { onBack: () => voi
   const fullSets = [
     { title: '联考图推考前冲刺', count: '3348', coverTitle: '联考图推\n考前冲刺' },
     { title: '2026年3.14多省联考考前全真演练卷', count: '2.0w', coverTitle: '2026年3.14多省联考\n考前全真演练卷' },
-    { title: '2026省考选调生上岸计划——资料分析', count: '2.7w', coverTitle: '2026省考/选调生\n上岸计划—资料分析' },
+    { title: '2026省考选调生上岸计划—��资料分析', count: '2.7w', coverTitle: '2026省考/选调生\n上岸计划—资料分析' },
     { title: '2026省考/选调生上岸计划—数量关系', count: '1.1w', coverTitle: '2026省考/选调生\n上岸计划—数量关系' },
     { title: '2026省考/选调生上岸计划—判断推理', count: '5.7w', coverTitle: '2026省考/选调生\n上岸计划—判断推理' },
     { title: '2026省考/选调生上岸计划——言语理解与表达', count: '3.7w', coverTitle: '2026省考/选调生\n上岸计划—言语理解与表达' },
@@ -2967,7 +2834,7 @@ function IdiomPracticePage({ onBack, onHome }: { onBack: () => void, onHome: () 
       {/* Question Content */}
       <div className="px-6 mt-12 flex-1 overflow-y-auto">
         <p className="text-[17px] leading-[1.8] text-black/90 font-medium tracking-wide">
-          “历尽天华成此景，人间万事出艰辛”。每一项成就都不是从天上��下来的，��是紧锣密鼓干出来���、<span className="inline-block w-16 border-b border-black mx-1"></span>拼出来的，是快马加鞭冲出来的、奋楫争先抢出来的。
+          “历尽天华成此景，人间万事出艰辛”。每一项成就都不是从天上��下来的，��是紧锣密鼓干出来�����、<span className="inline-block w-16 border-b border-black mx-1"></span>拼出来的，是快马加鞭冲出来的、奋楫争先抢出来的。
         </p>
 
         {/* Options */}
