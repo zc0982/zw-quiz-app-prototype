@@ -82,11 +82,7 @@ const bottomNav = [
   { id: 5, title: '我的', icon: Smile, activeIcon: Smile },
 ];
 
-const selectionTypes = [
-  '公务员', '事业单位', '教师招聘',
-  '教师资格证', '专升本', '公安联考',
-  '医疗招聘', '三支一扶', '选调生'
-];
+const selectionTypes = ['公务员', '事业单位'];
 
 const SolarRoundAltArrowUpBold = ({ className }: { className?: string }) => (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className={className}>
@@ -229,7 +225,7 @@ function HomeTab({ onStartQuiz, onNavigateToPastPapers, onNavigateToFullSetPract
 
       <div className="relative z-10">
         {/* Header */}
-        <header className="px-3 h-11 flex justify-between items-center">
+        <header className="px-3 h-11 flex justify-between items-center relative">
           <div 
             className="flex items-center bg-white rounded-full px-4 py-1.5 cursor-pointer border border-black/5 shadow-sm"
             onClick={() => setIsTypeSheetOpen(true)}
@@ -250,51 +246,37 @@ function HomeTab({ onStartQuiz, onNavigateToPastPapers, onNavigateToFullSetPract
           </div>
         </header>
 
-        {/* Type Selection Sheet */}
+        {/* Type Selection Dropdown */}
         <AnimatePresence>
           {isTypeSheetOpen && (
             <>
-              {/* Backdrop */}
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
+              <div
+                className="fixed inset-0 z-[100]"
                 onClick={() => setIsTypeSheetOpen(false)}
-                className="fixed inset-0 bg-black/40 z-[100] backdrop-blur-sm"
               />
-              {/* Sheet */}
               <motion.div
-                initial={{ y: "100%" }}
-                animate={{ y: 0 }}
-                exit={{ y: "100%" }}
-                transition={{ type: "spring", damping: 25, stiffness: 200 }}
-                className="fixed bottom-0 left-0 right-0 bg-white rounded-t-[32px] z-[101] px-6 pt-8 pb-12 shadow-2xl max-h-[80vh] overflow-y-auto"
+                initial={{ opacity: 0, scale: 0.95, y: -4 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.95, y: -4 }}
+                transition={{ duration: 0.12 }}
+                className="absolute top-12 left-3 z-[101] bg-white rounded-2xl shadow-lg overflow-hidden"
               >
-                <div className="flex items-center mb-8">
-                  <div className="w-1.5 h-6 bg-blue-500 rounded-full mr-3"></div>
-                  <h2 className="text-[22px] font-bold text-black/90">选择类型</h2>
-                </div>
-
-                <div className="grid grid-cols-3 gap-x-4 gap-y-5">
-                  {selectionTypes.map((type) => (
-                    <div
-                      key={type}
-                      onClick={() => {
-                        setSelectedType(type);
-                        setIsTypeSheetOpen(false);
-                      }}
-                      className={`
-                        h-12 flex items-center justify-center rounded-full text-[15px] font-medium transition-all duration-200
-                        ${selectedType === type 
-                          ? 'bg-blue-50 text-blue-600 border-2 border-blue-500 shadow-[0_4px_12px_rgba(59,130,246,0.15)]' 
-                          : 'bg-gray-50 text-black/80 border-2 border-transparent active:scale-95'
-                        }
-                      `}
-                    >
-                      {type}
-                    </div>
-                  ))}
-                </div>
+                {selectionTypes.map((type) => (
+                  <div
+                    key={type}
+                    onClick={() => {
+                      setSelectedType(type);
+                      setIsTypeSheetOpen(false);
+                    }}
+                    className={`px-6 py-3.5 text-[15px] font-medium cursor-pointer transition-colors ${
+                      selectedType === type
+                        ? 'text-blue-600 bg-blue-50'
+                        : 'text-black/80 active:bg-gray-50'
+                    }`}
+                  >
+                    {type}
+                  </div>
+                ))}
               </motion.div>
             </>
           )}
@@ -502,7 +484,7 @@ function QuickPracticeTab({ onStartQuiz, onNavigateToSpeedCalc, onNavigateToMate
             >
               <GreenClipboard />
               <div className="relative z-20 bg-white rounded-[14px] py-4 px-1 text-center shadow-[0_2px_10px_rgba(0,0,0,0.02)] h-full flex flex-col justify-center">
-                <h3 className="font-black text-[rgba(0,0,0,0.9)] text-[16px] mb-1.5 tracking-wide">最新时政</h3>
+                <h3 className="font-black text-[rgba(0,0,0,0.9)] text-[16px] mb-1.5 tracking-wide">��新时政</h3>
                 <p className="text-[12px] text-[rgba(0,0,0,0.6)] font-medium">收录错题，强化记忆</p>
               </div>
             </div>
@@ -641,7 +623,7 @@ function LoginPage({ onLogin, onSkip }: { onLogin: () => void, onSkip: () => voi
 
   const handleLoginClick = () => {
     if (!agreed) {
-      alert('请先阅读并同意用户协议和隐私政策');
+      alert('请先阅读并同意用户协议和隐私政��');
       return;
     }
     onLogin();
@@ -1082,7 +1064,7 @@ function LearningReportPage({ onBack }: { onBack: () => void }) {
               <RadarChart cx="50%" cy="50%" outerRadius="70%" data={radarData}>
                 <PolarGrid stroke="#e5e7eb" />
                 <PolarAngleAxis dataKey="subject" tick={{ fill: '#6b7280', fontSize: 10 }} />
-                <Radar name="平均掌握度" dataKey="avgMastery" stroke="#DBEAFE" fill="#DBEAFE" fillOpacity={0.5} />
+                <Radar name="平均��握度" dataKey="avgMastery" stroke="#DBEAFE" fill="#DBEAFE" fillOpacity={0.5} />
                 <Radar name="我的掌握度" dataKey="myMastery" stroke="#3B82F6" fill="#3B82F6" fillOpacity={0.8} />
               </RadarChart>
             </ResponsiveContainer>
@@ -2559,7 +2541,7 @@ function FullSetPracticePage({ onBack, onNavigateToDetail }: { onBack: () => voi
   const fullSets = [
     { title: '联考图推考前冲刺', count: '3348', coverTitle: '联考图推\n考前冲刺' },
     { title: '2026年3.14多省联考考前全真演练卷', count: '2.0w', coverTitle: '2026年3.14多省联考\n考前全真演练卷' },
-    { title: '2026省考选调生上岸计划——资料分析', count: '2.7w', coverTitle: '2026省考/选调生\n上岸计划—资料分析' },
+    { title: '2026省考选调生上岸计划—��资料分析', count: '2.7w', coverTitle: '2026省考/选调生\n上岸计划—资料分析' },
     { title: '2026省考/选调生上岸计划—数量关系', count: '1.1w', coverTitle: '2026省考/选调生\n上岸计划—数量关系' },
     { title: '2026省考/选调生上岸计划—判断推理', count: '5.7w', coverTitle: '2026省考/选调生\n上岸计划—判断推理' },
     { title: '2026省考/选调生上岸计划——言语理解与表达', count: '3.7w', coverTitle: '2026省考/选调生\n上岸计划—言语理解与表达' },
