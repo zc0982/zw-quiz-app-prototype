@@ -4,6 +4,7 @@
  */
 
 import React, { useState, useRef, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { 
   ChevronDown, Bot, Search, Menu, PenLine, FileText, Files, BookOpen, FileEdit, ArrowUp,
   Minus, Plus, Pencil, Home, CheckSquare, Headphones, Smile, User, UserCircle,
@@ -246,51 +247,54 @@ function HomeTab({ onStartQuiz, onNavigateToPastPapers, onNavigateToFullSetPract
           </div>
         </header>
 
-        {/* Type Selection Sheet */}
-        <AnimatePresence>
-          {isTypeSheetOpen && (
-            <>
-              {/* Backdrop */}
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                onClick={() => setIsTypeSheetOpen(false)}
-                className="fixed inset-0 bg-black/40 z-[100] backdrop-blur-sm"
-              />
-              {/* Sheet */}
-              <motion.div
-                initial={{ y: "100%" }}
-                animate={{ y: 0 }}
-                exit={{ y: "100%" }}
-                transition={{ type: "spring", damping: 25, stiffness: 200 }}
-                className="fixed bottom-0 left-0 right-0 bg-white rounded-t-[32px] z-[101] px-6 pt-8 pb-12 shadow-2xl"
-              >
-                {selectionTypes.map((type, index) => (
-                  <div
-                    key={type}
-                    onClick={() => {
-                      setSelectedType(type);
-                      setIsTypeSheetOpen(false);
-                    }}
-                    className={`flex items-center justify-between px-4 py-4 text-[17px] font-medium rounded-lg cursor-pointer transition-colors mb-2 last:mb-0 ${
-                      selectedType === type
-                        ? 'bg-gray-50 text-black'
-                        : 'bg-white text-black/60 active:bg-gray-50'
-                    }`}
-                  >
-                    <span>{type}</span>
-                    {selectedType === type && (
-                      <svg className="w-6 h-6 text-black" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                        <polyline points="20 6 9 17 4 12"></polyline>
-                      </svg>
-                    )}
-                  </div>
-                ))}
-              </motion.div>
-            </>
-          )}
-        </AnimatePresence>
+        {/* Type Selection Sheet — portal to body to escape parent stacking context */}
+        {createPortal(
+          <AnimatePresence>
+            {isTypeSheetOpen && (
+              <>
+                {/* Backdrop */}
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  onClick={() => setIsTypeSheetOpen(false)}
+                  className="fixed inset-0 bg-black/40 z-[9998] backdrop-blur-sm"
+                />
+                {/* Sheet */}
+                <motion.div
+                  initial={{ y: "100%" }}
+                  animate={{ y: 0 }}
+                  exit={{ y: "100%" }}
+                  transition={{ type: "spring", damping: 25, stiffness: 200 }}
+                  className="fixed bottom-0 left-0 right-0 bg-white rounded-t-[32px] z-[9999] px-6 pt-8 pb-12 shadow-2xl"
+                >
+                  {selectionTypes.map((type) => (
+                    <div
+                      key={type}
+                      onClick={() => {
+                        setSelectedType(type);
+                        setIsTypeSheetOpen(false);
+                      }}
+                      className={`flex items-center justify-between px-4 py-4 text-[17px] font-medium rounded-lg cursor-pointer transition-colors mb-2 last:mb-0 ${
+                        selectedType === type
+                          ? 'bg-gray-50 text-black'
+                          : 'bg-white text-black/80 active:bg-gray-50'
+                      }`}
+                    >
+                      <span>{type}</span>
+                      {selectedType === type && (
+                        <svg className="w-6 h-6 text-black" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                          <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                      )}
+                    </div>
+                  ))}
+                </motion.div>
+              </>
+            )}
+          </AnimatePresence>,
+          document.body
+        )}
 
 
         <div className="bg-white/50 backdrop-blur-md rounded-t-[32px] pt-4 mt-2 min-h-screen">
@@ -2260,7 +2264,7 @@ const regionPastPapersData = [
   { id: 2, title: '2024年安徽省公务员录用考试《行测》题（网友回忆版）', date: '2024-03-17 14:12:18', count: 110, status: '未完成' },
   { id: 3, title: '2023年安徽省公务员录用考试《行测》题（网友回忆版）', date: '2023-11-03 14:22:18', count: 110, status: '未完成' },
   { id: 4, title: '2022年安徽省公务员录用考试《行测》题（网友回忆版）', date: '2023-11-03 14:22:18', count: 110, status: '未完成' },
-  { id: 5, title: '2021年安徽省公务员录用考试《行测》题（网友回忆版）', date: '2022-07-25 09:29:46', count: 110, status: '未完成' },
+  { id: 5, title: '2021年安徽省公务员录用考试《行测》题��网友回忆版）', date: '2022-07-25 09:29:46', count: 110, status: '未完成' },
   { id: 6, title: '2020年安徽省公务员录用考试《行测》试题（网友回忆版）', date: '', count: 0, status: '' },
 ];
 
