@@ -4,7 +4,7 @@
  */
 
 import React, { useState, useRef, useEffect } from 'react';
-import { createPortal } from 'react-dom';
+import { Drawer } from 'vaul';
 import { 
   ChevronDown, Bot, Search, Menu, PenLine, FileText, Files, BookOpen, FileEdit, ArrowUp,
   Minus, Plus, Pencil, Home, CheckSquare, Headphones, Smile, User, UserCircle,
@@ -247,54 +247,37 @@ function HomeTab({ onStartQuiz, onNavigateToPastPapers, onNavigateToFullSetPract
           </div>
         </header>
 
-        {/* Type Selection Sheet — portal to body to escape parent stacking context */}
-        {createPortal(
-          <AnimatePresence>
-            {isTypeSheetOpen && (
-              <>
-                {/* Backdrop */}
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  onClick={() => setIsTypeSheetOpen(false)}
-                  className="fixed inset-0 bg-black/40 z-[9998] backdrop-blur-sm"
-                />
-                {/* Sheet */}
-                <motion.div
-                  initial={{ y: "100%" }}
-                  animate={{ y: 0 }}
-                  exit={{ y: "100%" }}
-                  transition={{ type: "spring", damping: 25, stiffness: 200 }}
-                  className="fixed bottom-0 left-0 right-0 bg-white rounded-t-[32px] z-[9999] px-6 pt-8 pb-12 shadow-2xl"
+        {/* Type Selection Drawer */}
+        <Drawer.Root open={isTypeSheetOpen} onOpenChange={setIsTypeSheetOpen}>
+          <Drawer.Portal>
+            <Drawer.Overlay className="fixed inset-0 bg-black/40 z-[9998]" />
+            <Drawer.Content className="fixed bottom-0 left-0 right-0 bg-white rounded-t-[32px] z-[9999] px-6 pt-3 pb-10 shadow-2xl outline-none">
+              <Drawer.Title className="sr-only">选择类型</Drawer.Title>
+              <div className="mx-auto mb-4 h-1.5 w-10 rounded-full bg-gray-200" />
+              {selectionTypes.map((type) => (
+                <div
+                  key={type}
+                  onClick={() => {
+                    setSelectedType(type);
+                    setIsTypeSheetOpen(false);
+                  }}
+                  className={`flex items-center justify-between px-4 py-4 text-[17px] font-medium rounded-lg cursor-pointer transition-colors mb-2 last:mb-0 ${
+                    selectedType === type
+                      ? 'bg-gray-50 text-black'
+                      : 'bg-white text-black/80 active:bg-gray-50'
+                  }`}
                 >
-                  {selectionTypes.map((type) => (
-                    <div
-                      key={type}
-                      onClick={() => {
-                        setSelectedType(type);
-                        setIsTypeSheetOpen(false);
-                      }}
-                      className={`flex items-center justify-between px-4 py-4 text-[17px] font-medium rounded-lg cursor-pointer transition-colors mb-2 last:mb-0 ${
-                        selectedType === type
-                          ? 'bg-gray-50 text-black'
-                          : 'bg-white text-black/80 active:bg-gray-50'
-                      }`}
-                    >
-                      <span>{type}</span>
-                      {selectedType === type && (
-                        <svg className="w-6 h-6 text-black" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                          <polyline points="20 6 9 17 4 12"></polyline>
-                        </svg>
-                      )}
-                    </div>
-                  ))}
-                </motion.div>
-              </>
-            )}
-          </AnimatePresence>,
-          document.body
-        )}
+                  <span>{type}</span>
+                  {selectedType === type && (
+                    <svg className="w-6 h-6 text-black" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                  )}
+                </div>
+              ))}
+            </Drawer.Content>
+          </Drawer.Portal>
+        </Drawer.Root>
 
 
         <div className="bg-white/50 backdrop-blur-md rounded-t-[32px] pt-4 mt-2 min-h-screen">
@@ -2434,7 +2417,7 @@ function MaterialSpeedCalcAdvancedPage({ onBack }: { onBack: () => void }) {
   const types = [
     '基础量计算', '现期量计算', '增长率计算',
     '增长量计算', '多个数相加减', '平均值',
-    '间隔增长率', '分数比较-简单分数比较',
+    '间隔增长率', '分数��较-简单分数比较',
     '分数比较-进阶分数比较',
     '分数比较-多个分数比较', '百化分-基础积累',
     '百化分-进阶提升', '平均增长率', '基期和差',
