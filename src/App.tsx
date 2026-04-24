@@ -4,7 +4,6 @@
  */
 
 import React, { useState, useRef, useEffect } from 'react';
-import { createPortal } from 'react-dom';
 import { 
   ChevronDown, Bot, Search, Menu, PenLine, FileText, Files, BookOpen, FileEdit, ArrowUp,
   Minus, Plus, Pencil, Home, CheckSquare, Headphones, Smile, User, UserCircle,
@@ -87,13 +86,6 @@ const selectionTypes = [
   '公务员', '事业单位', '教师招聘',
   '教师资格证', '专升本', '公安联考',
   '医疗招聘', '三支一扶', '选调生'
-];
-
-const regionGroups = [
-  { label: 'A-G', regions: ['安徽', '北京', '重庆', '福建', '贵州', '甘肃', '广西', '广东'] },
-  { label: 'H-N', regions: ['湖南', '河南', '黑龙江', '河北', '湖北', '海南', '江苏', '江西', '吉林', '辽宁', '内蒙古', '宁夏'] },
-  { label: 'O-U', regions: ['青海', '山东', '陕西', '上海', '四川', '山西', '天津'] },
-  { label: 'W-Z', regions: ['新疆', '西藏', '云南', '浙江'] },
 ];
 
 const SolarRoundAltArrowUpBold = ({ className }: { className?: string }) => (
@@ -222,9 +214,7 @@ const PracticeListItem = ({
 function HomeTab({ onStartQuiz, onNavigateToPastPapers, onNavigateToFullSetPractice, onNavigateToSearch, onNavigateToCurrentAffairs, onNavigateToDailyPractice }: { onStartQuiz: (type: 'normal' | 'material') => void, onNavigateToPastPapers: () => void, onNavigateToFullSetPractice: () => void, onNavigateToSearch: () => void, onNavigateToCurrentAffairs: () => void, onNavigateToDailyPractice: () => void }) {
   const [expandedItems, setExpandedItems] = useState<string[]>([]);
   const [isTypeSheetOpen, setIsTypeSheetOpen] = useState(false);
-  const [isLocationSheetOpen, setIsLocationSheetOpen] = useState(false);
   const [selectedType, setSelectedType] = useState('公务员');
-  const [selectedLocation, setSelectedLocation] = useState('湖北');
 
   const toggleItem = (id: string) => {
     setExpandedItems(prev => 
@@ -246,17 +236,6 @@ function HomeTab({ onStartQuiz, onNavigateToPastPapers, onNavigateToFullSetPract
           >
             <div className="flex items-center space-x-1">
               <span className="text-black text-[15px]">{selectedType}</span>
-              <ChevronDown className="w-3 h-3 text-black/60" />
-            </div>
-            <div className="w-[1px] h-3 bg-black/10 mx-3"></div>
-            <div 
-              className="flex items-center space-x-1"
-              onClick={(e) => {
-                e.stopPropagation();
-                setIsLocationSheetOpen(true);
-              }}
-            >
-              <span className="text-black text-[15px]">{selectedLocation}</span>
               <ChevronDown className="w-3 h-3 text-black/60" />
             </div>
           </div>
@@ -321,96 +300,7 @@ function HomeTab({ onStartQuiz, onNavigateToPastPapers, onNavigateToFullSetPract
           )}
         </AnimatePresence>
 
-        {/* Location Selection Full Screen View — portal to body to escape parent stacking context */}
-        {createPortal(
-          <AnimatePresence>
-            {isLocationSheetOpen && (
-              <motion.div
-                initial={{ x: "100%" }}
-                animate={{ x: 0 }}
-                exit={{ x: "100%" }}
-                transition={{ type: "spring", damping: 30, stiffness: 300 }}
-                className="fixed inset-0 bg-white z-[9999] flex flex-col"
-              >
-                {/* Top Bar */}
-                <div className="shrink-0 h-12 px-4 flex items-center justify-between border-b border-gray-50">
-                  <button
-                    onClick={() => setIsLocationSheetOpen(false)}
-                    className="w-8 h-8 flex items-center justify-center -ml-2"
-                    aria-label="返回"
-                  >
-                    <ChevronLeft className="w-6 h-6 text-gray-900" />
-                  </button>
-                  <h1 className="text-[17px] font-semibold text-gray-900">选择报考地区</h1>
-                  <div className="w-8" />
-                </div>
 
-                {/* Main content area */}
-                <div className="flex-1 overflow-y-auto px-5 pt-6 pb-6">
-                  {/* Title + Illustration */}
-                  <div className="relative mb-8">
-                    <h2 className="text-[28px] font-bold text-gray-900 leading-tight pt-16">选择报考地区</h2>
-                    <div className="absolute top-0 right-0 w-48 h-48 -mt-4 -mr-4 pointer-events-none">
-                      <img
-                        src="/location-pin.jpg"
-                        alt="地区选择插图"
-                        className="w-full h-full object-contain"
-                      />
-                    </div>
-                  </div>
-
-                  {/* 国家 */}
-                  <div className="mb-6">
-                    <h3 className="text-[17px] font-bold text-gray-900 mb-4">报考地区</h3>
-                    <div className="grid grid-cols-3 gap-3">
-                      <button
-                        onClick={() => {
-                          setSelectedLocation('国家');
-                          setIsLocationSheetOpen(false);
-                        }}
-                        className={`h-12 flex items-center justify-center rounded-xl text-[15px] font-medium border transition-all ${selectedLocation === '国家' ? 'bg-blue-50 text-blue-600 border-blue-300' : 'bg-white text-gray-800 border-gray-200'}`}
-                      >
-                        国家
-                      </button>
-                    </div>
-                  </div>
-
-                  {/* Region groups */}
-                  {regionGroups.map((group) => (
-                    <div key={group.label} className="mb-6">
-                      <h4 className="text-[13px] font-medium text-gray-400 mb-3 tracking-wide">{group.label}</h4>
-                      <div className="grid grid-cols-3 gap-3">
-                        {group.regions.map((region) => (
-                          <button
-                            key={region}
-                            onClick={() => {
-                              setSelectedLocation(region);
-                              setIsLocationSheetOpen(false);
-                            }}
-                            className={`h-12 flex items-center justify-center rounded-xl text-[15px] font-medium border transition-all ${selectedLocation === region ? 'bg-blue-50 border-blue-300 text-blue-600' : 'bg-white border-gray-200 text-gray-800'}`}
-                          >
-                            {region}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-
-                {/* Bottom Button */}
-                <div className="shrink-0 px-5 py-4 bg-white">
-                  <button
-                    onClick={() => setIsLocationSheetOpen(false)}
-                    className="w-full h-14 bg-blue-500 text-white rounded-2xl font-semibold text-[17px] active:scale-[0.98] transition-transform"
-                  >
-                    完成 进入首页
-                  </button>
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>,
-          document.body
-        )}
         <div className="bg-white/50 backdrop-blur-md rounded-t-[32px] pt-4 mt-2 min-h-screen">
           {/* Top Tab Bar */}
           <div className="px-5 pb-2 flex justify-between items-center relative z-10">
@@ -2967,7 +2857,7 @@ function IdiomPracticePage({ onBack, onHome }: { onBack: () => void, onHome: () 
       {/* Question Content */}
       <div className="px-6 mt-12 flex-1 overflow-y-auto">
         <p className="text-[17px] leading-[1.8] text-black/90 font-medium tracking-wide">
-          “历尽天华成此景，人间万事出艰辛”。每一项成就都不是从天上��下来的，��是紧锣密鼓干出来���、<span className="inline-block w-16 border-b border-black mx-1"></span>拼出来的，是快马加鞭冲出来的、奋楫争先抢出来的。
+          “历尽天华成此景，人间万事出艰辛”。每一项成就都不是从天上��下来的，��是紧锣密鼓干出来�����、<span className="inline-block w-16 border-b border-black mx-1"></span>拼出来的，是快马加鞭冲出来的、奋楫争先抢出来的。
         </p>
 
         {/* Options */}
