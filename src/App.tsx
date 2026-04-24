@@ -261,17 +261,15 @@ function HomeTab({ onStartQuiz, onNavigateToPastPapers, onNavigateToFullSetPract
                     setSelectedType(type);
                     setIsTypeSheetOpen(false);
                   }}
-                  className={`flex items-center justify-between px-4 py-4 text-[17px] font-medium rounded-lg cursor-pointer transition-colors mb-2 last:mb-0 ${
-                    selectedType === type
-                      ? 'bg-gray-50 text-black'
-                      : 'bg-white text-black/80 active:bg-gray-50'
-                  }`}
+                  className="flex items-center justify-between px-4 py-4 text-[17px] font-medium text-black cursor-pointer"
                 >
                   <span>{type}</span>
                   {selectedType === type && (
-                    <svg className="w-6 h-6 text-black" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                      <polyline points="20 6 9 17 4 12"></polyline>
-                    </svg>
+                    <span className="w-5 h-5 rounded-full bg-black flex items-center justify-center">
+                      <svg className="w-3 h-3 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                      </svg>
+                    </span>
                   )}
                 </div>
               ))}
@@ -936,7 +934,7 @@ function LearningReportPage({ onBack }: { onBack: () => void }) {
         <button onClick={onBack} className="p-2 -ml-2 text-gray-900">
           <ChevronLeft className="w-6 h-6" />
         </button>
-        <h1 className="text-[17px] font-bold text-gray-900">学习报告</h1>
+        <h1 className="text-[17px] font-bold text-gray-900">学习���告</h1>
         <div className="flex items-center justify-between w-[87px] h-[32px] rounded-full border border-black/10 bg-white/60 px-2.5">
           <button className="flex items-center justify-center text-black active:opacity-50 transition-opacity">
             <MoreHorizontal className="w-[18px] h-[18px]" />
@@ -1872,7 +1870,7 @@ function MaterialQuizPage({ onBack, onSubmit }: { onBack: () => void, onSubmit: 
             <span className="text-[12px] font-medium text-blue-600 bg-blue-50 px-2 py-0.5 rounded-sm">材料</span>
           </div>
           <p className="text-[16px] text-gray-800 leading-loose tracking-wide indent-8 text-justify">
-            2023年全国著作权（包括作品著作权、计算机软件著作权、著作权质权）登记总量达8923901件，同比增长40.46%，增速比上年同期增加39个百分点。根据各省、自治区、直辖市版权局和中国版权保护中心作品登记信息统计，2023年全国共完成作品著作权登记6428277件，同比增长42.30%，登记量前五位的分别是：北京市1101072件，同比增加53802件；山东省873826件，同比增加619459件；福建省710648件，同比增加424814件；中国版权保护中心493070件，同比增加1476件；上海市412660件，同比增加30660件。从作品类型来看，登记量最多的是美术作品3296437件...
+            2023年全国著作权（包括作品著作权、计算机软件著作权、著作权质权）登记总量达8923901件，同比增长40.46%，增速比上年同期增加39个百分点。根据各省、自���区、直辖市版权局和中国版权保护中心作品登记信息统计，2023年全国共完成作品著作权登记6428277件，同比增长42.30%，登记量前五位的分别是：北京市1101072件，同比增加53802件；山东省873826件，同比增加619459件；福建省710648件，同比增加424814件；中国版权保护中心493070件，同比增加1476件；上海市412660件，同比增加30660件。从作品类型来看，登记量最多的是美术作品3296437件...
           </p>
         </div>
       </div>
