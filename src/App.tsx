@@ -225,7 +225,7 @@ function HomeTab({ onStartQuiz, onNavigateToPastPapers, onNavigateToFullSetPract
 
       <div className="relative z-10">
         {/* Header */}
-        <header className="px-3 h-11 flex justify-between items-center relative">
+        <header className="px-3 h-11 flex justify-between items-center">
           <div 
             className="flex items-center bg-white rounded-full px-4 py-1.5 cursor-pointer border border-black/5 shadow-sm"
             onClick={() => setIsTypeSheetOpen(true)}
@@ -246,35 +246,45 @@ function HomeTab({ onStartQuiz, onNavigateToPastPapers, onNavigateToFullSetPract
           </div>
         </header>
 
-        {/* Type Selection Dropdown */}
+        {/* Type Selection Sheet */}
         <AnimatePresence>
           {isTypeSheetOpen && (
             <>
-              <div
-                className="fixed inset-0 z-[100]"
-                onClick={() => setIsTypeSheetOpen(false)}
-              />
+              {/* Backdrop */}
               <motion.div
-                initial={{ opacity: 0, scale: 0.95, y: -4 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.95, y: -4 }}
-                transition={{ duration: 0.12 }}
-                className="absolute top-12 left-3 z-[101] bg-white rounded-2xl shadow-lg overflow-hidden"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                onClick={() => setIsTypeSheetOpen(false)}
+                className="fixed inset-0 bg-black/40 z-[100] backdrop-blur-sm"
+              />
+              {/* Sheet */}
+              <motion.div
+                initial={{ y: "100%" }}
+                animate={{ y: 0 }}
+                exit={{ y: "100%" }}
+                transition={{ type: "spring", damping: 25, stiffness: 200 }}
+                className="fixed bottom-0 left-0 right-0 bg-white rounded-t-[32px] z-[101] px-6 pt-8 pb-12 shadow-2xl"
               >
-                {selectionTypes.map((type) => (
+                {selectionTypes.map((type, index) => (
                   <div
                     key={type}
                     onClick={() => {
                       setSelectedType(type);
                       setIsTypeSheetOpen(false);
                     }}
-                    className={`px-6 py-3.5 text-[15px] font-medium cursor-pointer transition-colors ${
+                    className={`flex items-center justify-between px-4 py-4 text-[17px] font-medium rounded-lg cursor-pointer transition-colors mb-2 last:mb-0 ${
                       selectedType === type
-                        ? 'text-blue-600 bg-blue-50'
-                        : 'text-black/80 active:bg-gray-50'
+                        ? 'bg-gray-50 text-black'
+                        : 'bg-white text-black/60 active:bg-gray-50'
                     }`}
                   >
-                    {type}
+                    <span>{type}</span>
+                    {selectedType === type && (
+                      <svg className="w-6 h-6 text-black" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                      </svg>
+                    )}
                   </div>
                 ))}
               </motion.div>
